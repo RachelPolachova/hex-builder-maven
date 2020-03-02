@@ -81,7 +81,18 @@ public class HexagonBuilder {
         return 99;
     }
 
-
+    static public void checkniSusedov(ArrayList<Location> locations) {
+        for (Location loc: locations) {
+            for (String id: loc.getNeighboursIds()) {
+                locations.forEach(possibleN -> {
+                    if (possibleN.getId().equals(id)) {
+                        HexagonsSide side = getBasicHexagonSide(loc.getCenterLocation().bearing(possibleN.getCenterLocation()));
+                        System.out.println(loc.getName() + " ma " + possibleN.getName() + " na strane: " + side);
+                    }
+                });
+            }
+        }
+    }
 
     static public void buildFromArray(ArrayList<Location> locations) {
         Location mostNorth = findMostNorth(locations);
