@@ -12,6 +12,7 @@ public class App  {
     public static void main(String[] args) {
 //        testGetDataFromJSON();
         testDataFromHandledJSON();
+//        testDataFromJSONJHM();
     }
 
     public static void testDataFromHandledJSON() {
@@ -65,6 +66,16 @@ public class App  {
     public static void hexagonPrinter(Hexagon start) {
 
         start.printPoints();
+    }
+
+    public static void testDataFromJSONJHM() {
+        JSONReader jsonReader = new JSONReader();
+        ArrayList<RUIANLocation> ruianLocations = jsonReader.locations;
+        jsonReader.readOnlyRefWith("jednotlive-kraje.geojson", "CZ064");
+//        jsonReader.read("jednotlive-kraje.geojson");
+        ArrayList<Location> locations = new ArrayList<>();
+        ruianLocations.forEach(location -> locations.add(new Location(location.getName(), location.getId(), location.getCenter(), location.getNeighboursIds())));
+        jsonReader.write("jednotlive-kraje-spracovane.json", locations);
     }
 
     public static void testGetDataFromJSON() {

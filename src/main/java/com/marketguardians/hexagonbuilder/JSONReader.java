@@ -13,6 +13,23 @@ import java.util.ArrayList;
 
 public class JSONReader {
     public ArrayList<RUIANLocation> locations = new ArrayList<>();
+
+    public void readOnlyRefWith(String fileName, String ref) {
+        JSONParser jsonParser = new JSONParser();
+        try {
+            FileReader reader = new FileReader(fileName);
+            Object obj = jsonParser.parse(reader);
+            JSONObject object = (JSONObject) obj;
+            JSONArray elements = (JSONArray) object.get("features");
+
+            elements.forEach(el -> {
+                parseJSONElementOnlyWithRef( (JSONObject) el, ref);
+            });
+        } catch (ParseException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void read(String fileName) {
         JSONParser jsonParser = new JSONParser();
         try {
@@ -83,6 +100,30 @@ public class JSONReader {
             locationList.add(object);
         });
         return locationList;
+    }
+
+    private void parseJSONElementOnlyWithRef(JSONObject element, String ref) {
+        if (element.containsKey("properties")) {
+                JSONObject properties = (JSONObject) element.get("properties");
+                if (properties.containsKey("ref")) {
+                    String refObject = (String) properties.get("ref");
+                    if (refObject.contains(ref)) {
+                        if (properties.containsKey("name")) { //we are sure that it's region's object, not area admin
+                            RUIANLocation ruianLocation = new RUIANLocation((String) properties.get("name"), (String) properties.get("ref"));
+                            System.out.println("Ruian loc: " + ruianLocation.getName());
+                            JSONObject geometry = (JSONObject) element.get("geometry");
+                            JSONArray coordinates = (JSONArray) geometry.get("coordinates");
+                            JSONArray coordFixed = (JSONArray) coordinates.get(0);
+                            for (Object c :
+                                    coordFixed) {
+                                JSONArray points = (JSONArray) c;
+                                ruianLocation.addPoint(new LocationCoordinate2D((double) points.get(0), (double) points.get(1)));
+                            }
+                            locations.add(ruianLocation);
+                        }
+                    }
+                }
+        }
     }
 
     private void parseJSONElement(JSONObject element) {

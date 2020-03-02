@@ -46,10 +46,6 @@ public class HexagonBuilder {
         TOPLEFT,
         TOP,
         BOTTOM,
-        BTRIGHT, //between top right
-        BBRIGHT, //between bottom right
-        BBLEFT,
-        BTLEFT
     }
 
     public ArrayList<ArrayList<LocationCoordinate2D>> hexagons = new ArrayList<>();
@@ -66,14 +62,34 @@ public class HexagonBuilder {
         buildIntoArray(mostNorth, locations);
     }
 
+    private static int getPoradieI(double vyska, double jedenRiadok, int riadky) {
+        for (int i=1; i<=riadky; i++) {
+            if (vyska <= jedenRiadok * i) {
+                return riadky - i;
+            }
+        }
+        return 99;
+    }
+
+    private static int getPoradieJ(double sirka, double jedenStlpec, int stlpce) {
+        for (int i=1; i<=stlpce; i++) {
+            if (sirka <= jedenStlpec * i) {
+                return stlpce - i;
+            }
+        }
+
+        return 99;
+    }
+
+
 
     static public void buildFromArray(ArrayList<Location> locations) {
         Location mostNorth = findMostNorth(locations);
         Location mostSouth = findMostSouth(locations);
         Location mostWest = findMostWest(locations);
         Location mostEast = findMostEast(locations);
-        double riadky = 4;
-        double stlpce = 6;
+        int riadky = 4;
+        int stlpce = 7;
         double diffVyska = mostNorth.getCenterLocation().getLatitude() - mostSouth.getCenterLocation().getLatitude();
         double diffSirka = mostEast.getCenterLocation().getLongitude() - mostWest.getCenterLocation().getLongitude();
         System.out.println("diffVyska: " + diffVyska + " diffSirka: " + diffSirka);
@@ -82,44 +98,18 @@ public class HexagonBuilder {
         System.out.println("most north lat: " + mostNorth.getCenterLocation().getLatitude() + " riadok: " + jedenRiadok);
         locations.remove(mostNorth);
 
-        initMatrix();
+        initMatrix(riadky, stlpce);
         locations = sortByDistanceAsLocation(mostNorth, locations);
         locations.add(0, mostNorth);
         for (Location loc: locations) {
             double vyska = loc.getCenterLocation().getLatitude() - mostSouth.getCenterLocation().getLatitude();
-            int poradieI = 0;
-            if (vyska <= jedenRiadok) {
-                poradieI = 3;
-            } else if (vyska <= jedenRiadok * 2) {
-                poradieI = 2;
-            } else if (vyska <= jedenRiadok * 3) {
-                poradieI = 1;
-            } else if (vyska <= jedenRiadok * 4) {
-                poradieI = 0;
-            } else {
-                poradieI = 99;
-            }
-
-            int poradieJ = 0;
+            int poradieI = getPoradieI(vyska, jedenRiadok, riadky);
             double sirka = mostEast.getCenterLocation().getLongitude() - loc.getCenterLocation().getLongitude();
-//            System.out.println("sirka: " + sirka);
-            if (sirka <= jedenStlpec) {
-                poradieJ = 5;
-            } else if (sirka <= jedenStlpec * 2) {
-                poradieJ = 4;
-            }  else if (sirka <= jedenStlpec * 3) {
-                poradieJ = 3;
-            } else if (sirka <= jedenStlpec * 4) {
-                poradieJ = 2;
-            } else if (sirka <= jedenStlpec * 5) {
-                poradieJ = 1;
-            } else if (sirka <= jedenStlpec * 6) {
-                poradieJ = 0;
-            } else {
-                poradieJ = 99;
-            }
+            int poradieJ = getPoradieJ(sirka, jedenStlpec, stlpce);
 
+            System.out.println("PRED obsadenost: " + loc.getName() + " i: " + poradieI + " j: " + poradieJ);
             Pozicia poziciaNovehoHexu = checkObsadenost(poradieI, poradieJ);
+            System.out.println("PO obsadenost: " + loc.getName() + " i: " + poziciaNovehoHexu.getI() + " j: " + poziciaNovehoHexu.getJ());
 
             addToMatrix(loc, poziciaNovehoHexu.getI(), poziciaNovehoHexu.getJ());
 //            System.out.println("Loc: " + loc.getName() + " poradie: " + poradieI + ", " + poradieJ + " lat: " + loc.getCenterLocation().getLatitude());
@@ -171,10 +161,10 @@ public class HexagonBuilder {
         return new Pozicia(i, j, HexagonsSide.RIGHT);
     }
 
-    private static void initMatrix() {
-        for (int i = 0; i <= 3; i++) {
+    private static void initMatrix(int riadky, int stlpce) {
+        for (int i = 0; i < riadky; i++) {
             hexagonMatrix.add(new ArrayList<>());
-            for (int j = 0; j <=5; j++) {
+            for (int j = 0; j < stlpce; j++) {
                 hexagonMatrix.get(i).add(Optional.empty());
             }
 
@@ -196,9 +186,7 @@ public class HexagonBuilder {
 
                 HexagonsSide side = najblizsi.getSide();
 
-                if (side == HexagonsSide.TOP) {
-                    System.out.println("!!!DORIES TOP");
-                } else if (side == HexagonsSide.TOPRIGHT) {
+                if (side == HexagonsSide.TOPRIGHT) {
                     Hexagon novy = buildBottomLeftHex(location.getName(), najHex.getBottomLeftPoint(), location.getId());
 //                    hexagonMatrix.get(i).set(j, Optional.of(novy));
                     hexagonMatrix.get(najblizsi.getI()+1).set(najblizsi.getJ()-1, Optional.of(novy));
@@ -210,8 +198,6 @@ public class HexagonBuilder {
                     Hexagon novy = buildTopLeft(location.getName(), najHex.getTopLeftPoint(), location.getId());
 //                    hexagonMatrix.get(i).set(j, Optional.of(novy));
                     hexagonMatrix.get(najblizsi.getI()-1).set(najblizsi.getJ()-1, Optional.of(novy));
-                } else if (side == HexagonsSide.BOTTOM) {
-                    System.out.println("!!!DORIES BOTTOM");
                 } else if (side == HexagonsSide.BOTTOMLEFT) {
                     Hexagon novy = buildTopRight(location.getName(), najHex.getTopRightPoint(), location.getId());
 //                    hexagonMatrix.get(i).set(j, Optional.of(novy));
@@ -220,10 +206,50 @@ public class HexagonBuilder {
                     Hexagon novy = buildRight(location.getName(), najHex.getRightPoint(), location.getId());
 //                    hexagonMatrix.get(i).set(j, Optional.of(novy));
                     hexagonMatrix.get(najblizsi.getI()).set(najblizsi.getJ()+1, Optional.of(novy));
-                } else { //top left
+                } else if (side == HexagonsSide.TOPLEFT) {
                     Hexagon novy = buildBottomRight(location.getName(), najHex.getBottomRightPoint(), location.getId());
 //                    hexagonMatrix.get(i).set(j, Optional.of(novy));
                     hexagonMatrix.get(najblizsi.getI()+1).set(najblizsi.getJ()+1, Optional.of(novy));
+                } else if (side == HexagonsSide.TOP) {
+                    if (j < hexagonMatrix.size() - 1) {
+                        if (!hexagonMatrix.get(i).get(j+1).isPresent()) {
+                            System.out.println("TOP, vlazam vpravo");
+                            Hexagon novy = buildBottomRight(location.getName(), najHex.getBottomRightPoint(), location.getId());
+                            hexagonMatrix.get(i).set(j+1, Optional.of(novy));
+                        } else if (j > 0) {
+                            if (!hexagonMatrix.get(i).get(j-1).isPresent()) {
+                                System.out.println("TOP, vlazam vlavo");
+                                Hexagon novy = buildBottomLeftHex(location.getName(), najHex.getBottomLeftPoint(), location.getId());
+                                hexagonMatrix.get(i).set(j-1, Optional.of(novy));
+                            } else {
+                                System.out.println("CHYBA SE VLOUDILA, LEFT NENI VOLNE");
+                            }
+                        }
+                    } else if (j > 0) {
+                        if (!hexagonMatrix.get(i).get(j-1).isPresent()) {
+                            System.out.println("TOP, vlazam vlavo");
+                            Hexagon novy = buildBottomLeftHex(location.getName(), najHex.getBottomLeftPoint(), location.getId());
+                            hexagonMatrix.get(i).set(j-1, Optional.of(novy));
+                        } else {
+                            System.out.println("CHYBA SE VLOUDILA, LEFT NENI VOLNE");
+                        }
+                    }
+                } else { //bottom
+                    if (j < hexagonMatrix.size() - 1) {
+                        if (!hexagonMatrix.get(i).get(j+1).isPresent()) {
+                            System.out.println("BOTTOM, vlazam vpravo");
+                            Hexagon novy = buildTopRight(location.getName(), najHex.getTopRightPoint(), location.getId());
+                            hexagonMatrix.get(i).set(j+1, Optional.of(novy));
+                        } else if (j > 0) {
+                            if (!hexagonMatrix.get(i).get(j-1).isPresent()) {
+                                Hexagon novy = buildTopLeft(location.getName(), najHex.getTopLeftPoint(), location.getId());
+                                hexagonMatrix.get(i).set(j-1, Optional.of(novy));
+                            }
+                        }
+                    } else if (j < 0) {
+                        Hexagon novy = buildTopLeft(location.getName(), najHex.getTopLeftPoint(), location.getId());
+                        hexagonMatrix.get(i).set(j-1, Optional.of(novy));
+                    }
                 }
             } else {
                 System.out.println("CHYBA, ZADNY HEX!");
@@ -233,20 +259,16 @@ public class HexagonBuilder {
             Hexagon hex = initHex(location.getCenterLocation(), location.getName(), location.getId());
             hexagonMatrix.get(i).set(j, Optional.of(hex));
         }
-        System.out.println("done adding");
     }
 
     private static Pozicia najbizsi(int i, int j) {
         Pozicia pozicia = new Pozicia(99, 99, HexagonsSide.RIGHT);
-        ArrayList<Optional<Hexagon>> riadok = hexagonMatrix.get(i);
 
-        boolean outOfBoundsOnAllSides = false;
         int shift = 1;
-        boolean outOfOnTop = false;
+        boolean outOfBoundsOnAllSides = false;
         boolean outOfOnTopRight = false;
         boolean outOfOnRight = false;
         boolean outOfOnBottomRight = false;
-        boolean outOfOnBottom = false;
         boolean outOfOnBottomLeft = false;
         boolean outOfOnLeft = false;
         boolean outOfOnTopLeft = false;
@@ -254,7 +276,7 @@ public class HexagonBuilder {
         int diffBottom = hexagonMatrix.size() - 1 - i;
         int diffTop = hexagonMatrix.size() - 1 - diffBottom;
         int diffRight = hexagonMatrix.get(i).size() - 1 - j;
-        int diffLeft = hexagonMatrix.size() + 1 - diffRight;
+        int diffLeft = hexagonMatrix.size() - 1 - diffRight;
 
 //        System.out.println("I: " + i + " J: " + j + " diffBottom: " + diffBottom + " diffTop: " + diffTop + " diffRight: " + diffRight + " diffLeft: " + diffLeft);
 
@@ -319,8 +341,6 @@ public class HexagonBuilder {
                 if (hexagonMatrix.get(i-shift).get(j).isPresent()) {
                     return new Pozicia(i-shift, j, HexagonsSide.TOP);
                 }
-            } else {
-                outOfOnTop = true;
             }
 
             //check bottom
@@ -328,8 +348,6 @@ public class HexagonBuilder {
                 if (hexagonMatrix.get(i+shift).get(j).isPresent()) {
                     return new Pozicia(i+shift, j, HexagonsSide.BOTTOM);
                 }
-            } else {
-                outOfOnBottom = true;
             }
 
             for (int x = j; x < hexagonMatrix.get(i).size(); x++) {
@@ -347,69 +365,8 @@ public class HexagonBuilder {
             }
 
             shift++;
-            outOfBoundsOnAllSides = (outOfOnTop && outOfOnTopRight && outOfOnRight && outOfOnBottomRight && outOfOnBottom && outOfOnBottomLeft && outOfOnLeft && outOfOnTopLeft);
+            outOfBoundsOnAllSides = (outOfOnTopRight && outOfOnRight && outOfOnBottomRight && outOfOnBottomLeft && outOfOnLeft && outOfOnTopLeft);
         }
-//
-//
-//        System.out.println("looking for: " + i + ", " + j);
-//        for (int r = i; r < hexagonMatrix.size(); r++) {
-//            for (int s = j; s < hexagonMatrix.get(r).size(); s++) {
-////                System.out.println("in loop: " + r + ", " + s);
-//                if (hexagonMatrix.get(r).get(s).isPresent() && (r != i || s != j)) {
-//                    System.out.println("returning " + "r: " + r + " s:" + s);
-//                    return new Pozicia(r, s);
-//                }
-//            }
-//        }
-//
-//        for (int r = i; r < hexagonMatrix.size(); r++) {
-//            for (int s = j; s >= 0; s--) {
-//                if (hexagonMatrix.get(r).get(s).isPresent() && (r != i || s != j)) {
-//                    System.out.println("returning " + "r: " + r + " s:" + s);
-//                    return new Pozicia(r, s);
-//                }
-//            }
-//        }
-//
-//        for (int r=i; r>=0; r--) {
-//            for (int s = j; s < hexagonMatrix.get(r).size(); s++) {
-//                if (hexagonMatrix.get(r).get(s).isPresent() && (r != i || s != j)) {
-//                    System.out.println("returning " + "r: " + r + " s:" + s);
-//                    return new Pozicia(r, s);
-//                }
-//            }
-//        }
-//
-//        for (int r=i; r>=0; r--) {
-//            for (int s = j; s >= 0; s--) {
-//                if (hexagonMatrix.get(r).get(s).isPresent() && (r != i || s != j)) {
-//                    System.out.println("returning " + "r: " + r + " s:" + s);
-//                    return new Pozicia(r, s);
-//                }
-//            }
-//        }
-
-//        if (j > 0) {
-//            if (blizkoZlava(i, j)) {
-//                return new Pozicia(i, j - 1);
-//            } else if (j < hexagonMatrix.size() - 1) {
-//                if (blizkoZprava(i, j)) {
-//                    return new Pozicia(i, j + 1);
-//                }
-//            }
-//        } else if (blizkoZprava(i, j)) {
-//            return new Pozicia(i, j+1);
-//        }
-//
-//        for (int r = i; r < hexagonMatrix.size(); r++) {
-//            for (int s = 0; i < riadok.size(); s++) {
-//                if (hexagonMatrix.get(r).get(s).isPresent() && s != j && r != i) {
-//                    pozicia.setI(i);
-//                    pozicia.setJ(s);
-//                    break;
-//                }
-//            }
-//        }
         System.out.println("returning " + 99);
         return pozicia;
     }
