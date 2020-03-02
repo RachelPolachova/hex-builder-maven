@@ -1,44 +1,88 @@
 package com.marketguardians.hexagonbuilder;
 
 import org.json.simple.JSONArray;
+import org.xml.sax.helpers.LocatorImpl;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-/**
- * Hello world!
- *
- */
 public class App  {
     public static void main(String[] args) {
 //        testGetDataFromJSON();
-        testDatafromHandledJSON();
+        testDataFromHandledJSON();
     }
 
-    public static void testDatafromHandledJSON() {
+//    14.465998948021674, 50.06678953590457
+//            16.635192309849344, 49.08016775779745
+//            12.753140666493925, 50.1740780106054
+//            14.432289503348901, 49.093103716166425
+//            14.549549521132452, 50.003605104079966
+//            17.74737600927628, 49.220465871679764
+//            13.845656298301213, 50.53040788842697
+//            15.671506608486823, 49.413447495525105
+//            14.998644402157764, 50.704957583192055
+//            17.191056228799326, 49.77734278959563
+//            16.191218435959232, 49.90127909303319
+//            17.979367873745712, 49.82068143415316
+//            15.866472981287625, 50.38362976103177
+//            13.228010575306186, 49.59818625974606
+
+    public static void testDataFromHandledJSON() {
         JSONReader jsonReader = new JSONReader();
         ArrayList<Location> locations = jsonReader.parseHandledJSON("kraje-spracovane.json");
-        locations.forEach(location -> {
-            System.out.println("-----------");
-            System.out.println(location.getName() + ": ");
-            location.printNeighbours();
-        });
-        Hexagon start = HexagonBuilder.buildHexBasedOnNeighbours(locations);
-        System.out.println("ALL POINTS:");
-        start.printAllPoints();
+        System.out.println("-----------");
+        double height = 0;
+        double width = 0;
+        for (Location location: locations) {
+//            System.out.println("-----------");
+            System.out.println(location.getName());
+            location.getCenterLocation().print();
+            height += location.getCenterLocation().getLatitude();
+            width += location.getCenterLocation().getLongitude();
+//            System.out.println(location.getName() + ": ");
+//            location.printNeighbours();
+        }
+//        HexagonBuilder hexagonBuilder = new HexagonBuilder();
+//        hexagonBuilder.getHexArray(locations);
+//        System.out.println("PRINTING COORDS!");
+//        for (ArrayList<LocationCoordinate2D> points: hexagonBuilder.hexagons) {
+//            for (LocationCoordinate2D coord: points) {
+//                System.out.println(coord.getLongitude() + ", " + coord.getLatitude());
+//            }
+//        }
+//        Hexagon start = HexagonBuilder.buildHexBasedOnNeighbours(locations);
+//        System.out.println("ALL POINTS:");
+//        hexagonPrinter(start);
+
+//        HexagonBuilder.buildHexBasedOnNeighbours(locations);
+//        System.out.println("Hexs: " + HexagonBuilder.hexs.size());
+//        for (Hexagon hex: HexagonBuilder.hexs) {
+//            hex.printPoints();
+//        }
+
+        Location mostNorth = HexagonBuilder.findMostNorth(locations);
+        Location mostWest = HexagonBuilder.findMostWest(locations);
+        Location mostEast = HexagonBuilder.findMostEast(locations);
+        Location mostSouth = HexagonBuilder.findMostSouth(locations);
+
+        System.out.println("NORTH: " + mostNorth.getName());
+        System.out.println("WEST: " + mostWest.getName());
+        System.out.println("EAST: " + mostEast.getName());
+        System.out.println("SOUTH: " + mostSouth.getName());
+
+//        System.out.println("spolu: " + height + " priemer: " + height/locations.size() + " rozdil: " + (mostNorth.getCenterLocation().getLatitude() - mostSouth.getCenterLocation().getLatitude()));
+//        System.out.println("spolu: " + width + " priemer: " + width/locations.size() + " rozdil: " + (mostEast.getCenterLocation().getLongitude() - mostWest.getCenterLocation().getLongitude()));
+        HexagonBuilder.buildFromArray(locations);
+    }
+
+    public static void hexagonPrinter(Hexagon start) {
+
+        start.printPoints();
     }
 
     public static void testGetDataFromJSON() {
-
-        // TODO:
-        /*
-        Find location's neighbour
-        Neighbours in Location class, but not array of Location again, because of nested neighbours etc.
-        Maybe create ID for each neighbour?
-
-         */
-
         JSONReader jsonReader = new JSONReader();
 
         jsonReader.read("kraje.geojson");
@@ -46,61 +90,11 @@ public class App  {
         System.out.println("Locations: " + ruianLocations.size());
         System.out.println("----------------------------");
         ArrayList<Location> locations = new ArrayList<>();
-//        ruianLocations.forEach(l -> {
-//            System.out.println("-----" + l.getName() + ": ");
-//            l.printNeighbours();
-//        });
-        ruianLocations.forEach(location -> locations.add(new Location(location.getName(), location.getId(), getCenter(location.getPoints()), location.getNeighboursIds())));
+        ruianLocations.forEach(location -> locations.add(new Location(location.getName(), location.getId(), location.getCenter(), location.getNeighboursIds())));
         locations.forEach(l -> {
             System.out.println("-----" + l.getName() + ", center: " + l.getCenterLocation());
             l.printNeighbours();
         });
         jsonReader.write("kraje-spracovane.json", locations);
-    }
-
-    public static LocationCoordinate2D getCenter(ArrayList<LocationCoordinate2D> coords) {
-        LocationCoordinate2D center = new LocationCoordinate2D(0, 0);
-//        Point2D centroid = {0, 0};
-        double signedArea = 0.0;
-        double x0 = 0.0; // Current vertex X
-        double y0 = 0.0; // Current vertex Y
-        double x1 = 0.0; // Next vertex X
-        double y1 = 0.0; // Next vertex Y
-        double a = 0.0;  // Partial signed area
-
-        // For all vertices except last
-        int i=0;
-        for (i=0; i<coords.size()-1; ++i)
-        {
-            x0 = coords.get(i).getLongitude();
-            y0 = coords.get(i).getLatitude();
-            x1 = coords.get(i + 1).getLongitude();
-            y1 = coords.get(i + 1).getLatitude();
-            a = x0*y1 - x1*y0;
-            signedArea += a;
-            center.setLongitude(center.getLongitude() + (x0 + x1)*a);
-            center.setLatitude(center.getLatitude() + (y0 + y1)*a);
-        }
-
-        // Do last vertex separately to avoid performing an expensive
-        // modulus operation in each iteration.
-        x0 = coords.get(i).getLongitude();
-        y0 = coords.get(i).getLatitude();
-        x1 = coords.get(0).getLongitude();
-        y1 = coords.get(0).getLatitude();
-        a = x0*y1 - x1*y0;
-        signedArea += a;
-        center.setLongitude(center.getLongitude() + (x0 + x1)*a);
-        center.setLatitude(center.getLatitude() + (y0 + y1)*a);
-//        centroid.x += (x0 + x1)*a;
-//        centroid.y += (y0 + y1)*a;
-
-        signedArea *= 0.5;
-        center.setLongitude(center.getLongitude() / (6.0*signedArea));
-        center.setLatitude(center.getLatitude() / (6.0*signedArea));
-//        centroid.x /= ;
-//        centroid.y /= ;
-
-        return center;
     }
 }

@@ -1,6 +1,39 @@
 package com.marketguardians.hexagonbuilder;
 
 import java.util.ArrayList;
+import java.util.Optional;
+
+class Pozicia {
+    private int i;
+    private int j;
+    private HexagonBuilder.HexagonsSide side;
+
+    public Pozicia(int i, int j, HexagonBuilder.HexagonsSide side) {
+        this.i = i;
+        this.j = j;
+        this.side = side;
+    }
+
+    public void setI(int i) {
+        this.i = i;
+    }
+
+    public void setJ(int j) {
+        this.j = j;
+    }
+
+    public int getI() {
+        return i;
+    }
+
+    public int getJ() {
+        return j;
+    }
+
+    public HexagonBuilder.HexagonsSide getSide() {
+        return side;
+    }
+}
 
 public class HexagonBuilder {
 
@@ -19,32 +52,450 @@ public class HexagonBuilder {
         BTLEFT
     }
 
+    public ArrayList<ArrayList<LocationCoordinate2D>> hexagons = new ArrayList<>();
+    public static ArrayList<Hexagon> hexs = new ArrayList<>();
+
     public static ArrayList<Location> allLocations = new ArrayList<>();
     public static ArrayList<String> handledLocations = new ArrayList<>();
+
+    public static ArrayList<ArrayList<Optional<Hexagon>>> hexagonMatrix = new ArrayList<>(new ArrayList<>());
+
+    public void getHexArray(ArrayList<Location> locations) {
+        Location mostNorth = findMostNorth(locations);
+        locations.remove(mostNorth);
+        buildIntoArray(mostNorth, locations);
+    }
+
+
+    static public void buildFromArray(ArrayList<Location> locations) {
+        Location mostNorth = findMostNorth(locations);
+        Location mostSouth = findMostSouth(locations);
+        Location mostWest = findMostWest(locations);
+        Location mostEast = findMostEast(locations);
+        double riadky = 4;
+        double stlpce = 6;
+        double diffVyska = mostNorth.getCenterLocation().getLatitude() - mostSouth.getCenterLocation().getLatitude();
+        double diffSirka = mostEast.getCenterLocation().getLongitude() - mostWest.getCenterLocation().getLongitude();
+        System.out.println("diffVyska: " + diffVyska + " diffSirka: " + diffSirka);
+        double jedenRiadok = diffVyska / riadky;
+        double jedenStlpec = diffSirka / stlpce;
+        System.out.println("most north lat: " + mostNorth.getCenterLocation().getLatitude() + " riadok: " + jedenRiadok);
+        locations.remove(mostNorth);
+
+        initMatrix();
+        locations = sortByDistanceAsLocation(mostNorth, locations);
+        locations.add(0, mostNorth);
+        for (Location loc: locations) {
+            double vyska = loc.getCenterLocation().getLatitude() - mostSouth.getCenterLocation().getLatitude();
+            int poradieI = 0;
+            if (vyska <= jedenRiadok) {
+                poradieI = 3;
+            } else if (vyska <= jedenRiadok * 2) {
+                poradieI = 2;
+            } else if (vyska <= jedenRiadok * 3) {
+                poradieI = 1;
+            } else if (vyska <= jedenRiadok * 4) {
+                poradieI = 0;
+            } else {
+                poradieI = 99;
+            }
+
+            int poradieJ = 0;
+            double sirka = mostEast.getCenterLocation().getLongitude() - loc.getCenterLocation().getLongitude();
+//            System.out.println("sirka: " + sirka);
+            if (sirka <= jedenStlpec) {
+                poradieJ = 5;
+            } else if (sirka <= jedenStlpec * 2) {
+                poradieJ = 4;
+            }  else if (sirka <= jedenStlpec * 3) {
+                poradieJ = 3;
+            } else if (sirka <= jedenStlpec * 4) {
+                poradieJ = 2;
+            } else if (sirka <= jedenStlpec * 5) {
+                poradieJ = 1;
+            } else if (sirka <= jedenStlpec * 6) {
+                poradieJ = 0;
+            } else {
+                poradieJ = 99;
+            }
+            addToMatrix(loc, poradieI, poradieJ);
+//            System.out.println("Loc: " + loc.getName() + " poradie: " + poradieI + ", " + poradieJ + " lat: " + loc.getCenterLocation().getLatitude());
+        }
+        System.out.println("---- printing points -----");
+        for (int i=0; i < hexagonMatrix.size(); i++) {
+            for (int j=0; j<hexagonMatrix.get(i).size(); j++) {
+                Optional<Hexagon> hex = hexagonMatrix.get(i).get(j);
+                if (hex.isPresent()) {
+
+                    System.out.println(hex.get().getName() + " at: " + i + ", " + j);
+                    hex.get().printPoints();
+                }
+            }
+        }
+        for (ArrayList<Optional<Hexagon>> matrix : hexagonMatrix) {
+            for (Optional<Hexagon> hex : matrix) {
+
+            }
+        }
+    }
+
+    private static void initMatrix() {
+        for (int i = 0; i <= 3; i++) {
+            hexagonMatrix.add(new ArrayList<>());
+            for (int j = 0; j <=5; j++) {
+                hexagonMatrix.get(i).add(Optional.empty());
+            }
+
+            System.out.println("one line: " + hexagonMatrix.get(i).size());
+        }
+
+        System.out.println("INIT HEX: " + hexagonMatrix.size());
+    }
+
+    private static void addToMatrix(Location location, int i, int j) {
+
+        Pozicia najblizsi = najbizsi(i, j);
+
+        System.out.println("meno: " + location.getName() + " i: " + i + " j: " + j + " najblizsi: " + najblizsi.getI() + " " + najblizsi.getJ());
+        if (najblizsi.getI() != 99 && najblizsi.getJ() != 99) {
+
+            if (hexagonMatrix.get(najblizsi.getI()).get(najblizsi.getJ()).isPresent()) {
+                Hexagon najHex = hexagonMatrix.get(najblizsi.getI()).get(najblizsi.getJ()).get();
+
+                HexagonsSide side = najblizsi.getSide();
+
+                if (side == HexagonsSide.TOP) {
+                    System.out.println("!!!DORIES TOP");
+                } else if (side == HexagonsSide.TOPRIGHT) {
+                    Hexagon novy = buildBottomLeftHex(location.getName(), najHex.getBottomLeftPoint(), location.getId());
+                    hexagonMatrix.get(i).set(j, Optional.of(novy));
+                } else if (side == HexagonsSide.RIGHT) {
+                    Hexagon novy = buildLeftHex(location.getName(), najHex.getLeftPoint(), location.getId());
+                    hexagonMatrix.get(i).set(j, Optional.of(novy));
+                } else if (side == HexagonsSide.BOTTOMRIGHT) {
+                    Hexagon novy = buildTopLeft(location.getName(), najHex.getTopLeftPoint(), location.getId());
+                    hexagonMatrix.get(i).set(j, Optional.of(novy));
+                } else if (side == HexagonsSide.BOTTOM) {
+                    System.out.println("!!!DORIES BOTTOM");
+                } else if (side == HexagonsSide.BOTTOMLEFT) {
+                    Hexagon novy = buildTopRight(location.getName(), najHex.getTopRightPoint(), location.getId());
+                    hexagonMatrix.get(i).set(j, Optional.of(novy));
+                } else if (side == HexagonsSide.LEFT) {
+                    Hexagon novy = buildRight(location.getName(), najHex.getRightPoint(), location.getId());
+                    hexagonMatrix.get(i).set(j, Optional.of(novy));
+                } else { //top left
+                    Hexagon novy = buildBottomRight(location.getName(), najHex.getBottomRightPoint(), location.getId());
+                    hexagonMatrix.get(i).set(j, Optional.of(novy));
+                }
+            } else {
+                System.out.println("CHYBA, ZADNY HEX!");
+            }
+        } else {
+            System.out.println("99: " + location.getName() + " adding at: " + i + ", " + j);
+            Hexagon hex = initHex(location.getCenterLocation(), location.getName(), location.getId());
+            hexagonMatrix.get(i).set(j, Optional.of(hex));
+        }
+        System.out.println("done adding");
+    }
+
+    private static Pozicia najbizsi(int i, int j) {
+        Pozicia pozicia = new Pozicia(99, 99, HexagonsSide.RIGHT);
+        ArrayList<Optional<Hexagon>> riadok = hexagonMatrix.get(i);
+
+        boolean outOfBoundsOnAllSides = false;
+        int shift = 1;
+        boolean outOfOnTop = false;
+        boolean outOfOnTopRight = false;
+        boolean outOfOnRight = false;
+        boolean outOfOnBottomRight = false;
+        boolean outOfOnBottom = false;
+        boolean outOfOnBottomLeft = false;
+        boolean outOfOnLeft = false;
+        boolean outOfOnTopLeft = false;
+
+        int diffBottom = hexagonMatrix.size() - 1 - i;
+        int diffTop = hexagonMatrix.size() - 1 - diffBottom;
+        int diffRight = hexagonMatrix.get(i).size() - 1 - j;
+        int diffLeft = hexagonMatrix.size() + 1 - diffRight;
+
+//        System.out.println("I: " + i + " J: " + j + " diffBottom: " + diffBottom + " diffTop: " + diffTop + " diffRight: " + diffRight + " diffLeft: " + diffLeft);
+
+        while (!outOfBoundsOnAllSides) {
+
+            //check right
+            if (shift <= diffRight) {
+                if (hexagonMatrix.get(i).get(j+shift).isPresent()) {
+                    return new Pozicia(i, j+shift, HexagonsSide.RIGHT);
+                }
+            } else {
+                outOfOnRight = true;
+            }
+
+            //check left
+            if (shift <= diffLeft) {
+                if (hexagonMatrix.get(i).get(j-shift).isPresent()) {
+                    return new Pozicia(i, j-shift, HexagonsSide.LEFT);
+                }
+            } else {
+                outOfOnLeft = true;
+            }
+
+            //check top left
+            if (shift <= diffLeft && shift <= diffTop) {
+                if (hexagonMatrix.get(i-shift).get(j-shift).isPresent()) {
+                    return new Pozicia(i-shift, j-shift, HexagonsSide.TOPLEFT);
+                }
+            } else {
+                outOfOnTopLeft = true;
+            }
+
+            //check top right
+            if (shift <= diffRight && shift <= diffTop) {
+                if (hexagonMatrix.get(i-shift).get(j+shift).isPresent()) {
+                    return new Pozicia(i-shift, j+shift, HexagonsSide.TOPRIGHT);
+                }
+            } else {
+                outOfOnTopRight = true;
+            }
+
+            //check bottom right
+            if (shift <= diffRight && shift <= diffBottom) {
+                if (hexagonMatrix.get(i+shift).get(j+shift).isPresent()) {
+                    return new Pozicia(i+shift, j+shift, HexagonsSide.BOTTOMRIGHT);
+                }
+            } else {
+                outOfOnBottomRight = true;
+            }
+
+            //check bottom left
+            if (shift <= diffLeft && shift <= diffBottom) {
+                if (hexagonMatrix.get(i+shift).get(j-shift).isPresent()) {
+                    return new Pozicia(i+shift, j-shift, HexagonsSide.BOTTOMLEFT);
+                }
+            } else {
+                outOfOnBottomLeft = true;
+            }
+
+            //check top
+            if (shift <= diffTop) {
+                if (hexagonMatrix.get(i-shift).get(j).isPresent()) {
+                    return new Pozicia(i-shift, j, HexagonsSide.TOP);
+                }
+            } else {
+                outOfOnTop = true;
+            }
+
+            //check bottom
+            if (shift <= diffBottom) {
+                if (hexagonMatrix.get(i+shift).get(j).isPresent()) {
+                    return new Pozicia(i+shift, j, HexagonsSide.BOTTOM);
+                }
+            } else {
+                outOfOnBottom = true;
+            }
+
+            shift++;
+            outOfBoundsOnAllSides = (outOfOnTop && outOfOnTopRight && outOfOnRight && outOfOnBottomRight && outOfOnBottom && outOfOnBottomLeft && outOfOnLeft && outOfOnTopLeft);
+        }
+//
+//
+//        System.out.println("looking for: " + i + ", " + j);
+//        for (int r = i; r < hexagonMatrix.size(); r++) {
+//            for (int s = j; s < hexagonMatrix.get(r).size(); s++) {
+////                System.out.println("in loop: " + r + ", " + s);
+//                if (hexagonMatrix.get(r).get(s).isPresent() && (r != i || s != j)) {
+//                    System.out.println("returning " + "r: " + r + " s:" + s);
+//                    return new Pozicia(r, s);
+//                }
+//            }
+//        }
+//
+//        for (int r = i; r < hexagonMatrix.size(); r++) {
+//            for (int s = j; s >= 0; s--) {
+//                if (hexagonMatrix.get(r).get(s).isPresent() && (r != i || s != j)) {
+//                    System.out.println("returning " + "r: " + r + " s:" + s);
+//                    return new Pozicia(r, s);
+//                }
+//            }
+//        }
+//
+//        for (int r=i; r>=0; r--) {
+//            for (int s = j; s < hexagonMatrix.get(r).size(); s++) {
+//                if (hexagonMatrix.get(r).get(s).isPresent() && (r != i || s != j)) {
+//                    System.out.println("returning " + "r: " + r + " s:" + s);
+//                    return new Pozicia(r, s);
+//                }
+//            }
+//        }
+//
+//        for (int r=i; r>=0; r--) {
+//            for (int s = j; s >= 0; s--) {
+//                if (hexagonMatrix.get(r).get(s).isPresent() && (r != i || s != j)) {
+//                    System.out.println("returning " + "r: " + r + " s:" + s);
+//                    return new Pozicia(r, s);
+//                }
+//            }
+//        }
+
+//        if (j > 0) {
+//            if (blizkoZlava(i, j)) {
+//                return new Pozicia(i, j - 1);
+//            } else if (j < hexagonMatrix.size() - 1) {
+//                if (blizkoZprava(i, j)) {
+//                    return new Pozicia(i, j + 1);
+//                }
+//            }
+//        } else if (blizkoZprava(i, j)) {
+//            return new Pozicia(i, j+1);
+//        }
+//
+//        for (int r = i; r < hexagonMatrix.size(); r++) {
+//            for (int s = 0; i < riadok.size(); s++) {
+//                if (hexagonMatrix.get(r).get(s).isPresent() && s != j && r != i) {
+//                    pozicia.setI(i);
+//                    pozicia.setJ(s);
+//                    break;
+//                }
+//            }
+//        }
+        System.out.println("returning " + 99);
+        return pozicia;
+    }
+
+    private static boolean blizkoZlava(int i, int j) {
+        return hexagonMatrix.get(i).get(j-1).isPresent();
+    }
+
+    private static boolean blizkoZprava(int i, int j) {
+        return hexagonMatrix.get(i).get(j+1).isPresent();
+    }
+
+    private void buildIntoArray(Location mostNorth, ArrayList<Location> locations) {
+        locations.remove(mostNorth);
+        ArrayList<Location> locationsToAddAtRight = findAllRight(mostNorth, locations);
+        ArrayList<Location> locationsToAddAtLeft = findAllLeft(mostNorth, locations);
+        Hexagon init = initHex(mostNorth.getCenterLocation(),mostNorth.getName(),mostNorth.getId());
+        hexagons.add(init.getPoints());
+        locationsToAddAtRight = sortByDistanceAsLocation(mostNorth, locationsToAddAtRight);
+        locationsToAddAtLeft = sortByDistanceAsLocation(mostNorth, locationsToAddAtLeft);
+        Hexagon previous = init;
+        for (Location locToBuild: locationsToAddAtRight) {
+            System.out.println("............. adding to right: " + locToBuild.getName());
+            previous = buildRight(locToBuild.getName(), previous.getRightPoint(), locToBuild.getId());
+            locations.remove(locToBuild);
+            hexagons.add(previous.getPoints());
+        }
+
+        for (Location locToBuild: locationsToAddAtLeft) {
+            System.out.println("............. adding to left: " + locToBuild.getName());
+            previous = buildLeftHex(locToBuild.getName(), previous.getLeftPoint(), locToBuild.getId());
+            locations.remove(locToBuild);
+            hexagons.add(previous.getPoints());
+        }
+        Optional<Location> next = findBLorBR(mostNorth, locations);
+        if (next.isPresent()) {
+            locations.remove(next.get());
+            buildIntoArray(next.get(), locations);
+        }
+    }
+
+    private Optional<Location> findBLorBR(Location location, ArrayList<Location> locations) {
+        Optional<Location> loc = Optional.empty();
+        for (String id: location.getNeighboursIds()) {
+            Optional<Location> neighbour = Optional.empty();
+            for (Location possibleN: locations) {
+                if (id.equals(possibleN.getId())) {
+                    neighbour = Optional.of(possibleN);
+                    break;
+                }
+            }
+            if (neighbour.isPresent()) {
+                double bearing = location.getCenterLocation().bearing(neighbour.get().getCenterLocation());
+                HexagonsSide side = getBasicHexagonSide(bearing);
+                if (side == HexagonsSide.BOTTOMRIGHT || side == HexagonsSide.BOTTOMLEFT) {
+                    loc = Optional.of(neighbour.get());
+                }
+            }
+        }
+        return loc;
+    }
+
+    public ArrayList<Location> findAllRight(Location location, ArrayList<Location> locations) {
+        ArrayList<Location> foundLocations = new ArrayList<>();
+        for (Location possibleN: locations) {
+            double bearing = location.getCenterLocation().bearing(possibleN.getCenterLocation());
+            HexagonsSide side = getBasicHexagonSide(bearing);
+            System.out.println("most north: " + location.getName() + " possible: " + possibleN.getName() + " bearing: " + bearing + " side: " + side);
+            if (side == HexagonsSide.RIGHT && location.getNeighboursIds().contains(possibleN.getId())) {
+                foundLocations.add(possibleN);
+            }
+        }
+        return foundLocations;
+    }
+
+    public ArrayList<Location> findAllLeft(Location location, ArrayList<Location> locations) {
+        ArrayList<Location> foundLocations = new ArrayList<>();
+        for (Location possibleN: locations) {
+            HexagonsSide side = getBasicHexagonSide(location.getCenterLocation().bearing(possibleN.getCenterLocation()));
+            if (side == HexagonsSide.LEFT && location.getNeighboursIds().contains(possibleN.getId())) {
+                foundLocations.add(possibleN);
+            }
+        }
+        return foundLocations;
+    }
 
     public static Hexagon buildHexBasedOnNeighbours(ArrayList<Location> locations) {
         allLocations = locations;
         Location mostNorth = findMostNorth(locations);
         Hexagon start = initHex(mostNorth.getCenterLocation(), mostNorth.getName(), mostNorth.getId());
+        hexs.add(start);
         handledLocations.add(mostNorth.getId());
-        locations.remove(mostNorth);
-        Location neighbour = null;
-        if (mostNorth.getNeighboursIds().isEmpty()) {
-            addNeighbour(start, findClosest(mostNorth, locations), mostNorth);
-        } else {
-            for (String id: mostNorth.getNeighboursIds()) {
-                for (Location possibleNeighbour: locations) {
-                    if (possibleNeighbour.getId().equals(id)) {
-                        neighbour = possibleNeighbour;
-                        addNeighbour(start, neighbour, mostNorth);
-                        break;
-                    }
+        for (String id: mostNorth.getNeighboursIds()) {
+            for (Location n: locations) {
+                if (n.getId().equals(id)) {
+                    addNeighbour(start, n, mostNorth);
                 }
             }
         }
+
+
+
+//        locations.remove(mostNorth);
+//        Location neighbour = null;
+//        if (mostNorth.getNeighboursIds().isEmpty()) {
+//            addNeighbour(start, findClosest(mostNorth, locations), mostNorth);
+//        } else {
+//            for (String id: mostNorth.getNeighboursIds()) {
+//                for (Location possibleNeighbour: locations) {
+//                    if (possibleNeighbour.getId().equals(id)) {
+//                        neighbour = possibleNeighbour;
+//                        addNeighbour(start, neighbour, mostNorth);
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+        handleNeighbours(start);
+        handleNeighbours(start);
         handleNeighbours(start);
         System.out.println("returned start");
+        System.out.println("HANDLED LOCATIONS: " + handledLocations.size());
         return start;
+    }
+
+    public static ArrayList<Location> spracujBezSuseda(ArrayList<Location> locations) {
+        for (int i=0; i<locations.size(); i++ ) {
+            Location l = locations.get(i);
+            if (l.getNeighboursIds().isEmpty()) {
+                ArrayList<Location> list = new ArrayList<>(locations);
+                list.remove(l);
+                Location closest = findClosest(l,list);
+                l.addNeighbour(closest.getId());
+                locations.get(locations.indexOf(closest)).addNeighbour(l.getId());
+                System.out.println("ID of closest: " + locations.indexOf(closest));
+            }
+        }
+        return locations;
     }
 
     private static void addHexToStart(Hexagon start) {
@@ -78,51 +529,127 @@ public class HexagonBuilder {
     }
 
     public static void handleNeighbours(Hexagon start) {
-        System.out.println("handle neighborus called for " + start.getName());
-        if (start.getTopRightHex().isPresent()) {
-            addHexToStart(start.getTopRightHex().get());
-        }
+//        for (String id: mostNorth.getNeighboursIds()) {
+//            for (Location n: locations) {
+//                if (n.getId().equals(id)) {
+//                    addNeighbour(start, n, mostNorth);
+//                }
+//            }
+//        }
 
-        if (start.getRightHex().isPresent()) {
-            addHexToStart(start.getRightHex().get());
-        }
+        ArrayList<Hexagon> hexagons = new ArrayList<>(hexs);
 
-        if (start.getBottomRightHex().isPresent()) {
-            addHexToStart(start.getBottomRightHex().get());
-        }
+        for (Hexagon hex: hexagons) {
+            Optional<Location> l = Optional.empty();
+            for (Location loc: allLocations) {
+                if (hex.getId().equals(loc.getId())) {
+                    l = Optional.of(loc);
+                    break;
+                }
+            }
 
-        if (start.getBottomLeftHex().isPresent()) {
-            addHexToStart(start.getBottomLeftHex().get());
+            if (l.isPresent()) {
+                for (String id: l.get().getNeighboursIds()) {
+                    for (Location n: allLocations) {
+                        if (n.getId().equals(id)) {
+                            addNeighbour(hex, n, l.get());
+                        }
+                    }
+                }
+            }
         }
-
-        if (start.getLeftHex().isPresent()) {
-            addHexToStart(start.getLeftHex().get());
-        }
-
-        if (start.getTopLeftHex().isPresent()) {
-            addHexToStart(start.getTopLeftHex().get());
-        }
+//        System.out.println("handle neighborus called for " + start.getName());
+//        if (start.getTopRightHex().isPresent()) {
+//            addHexToStart(start.getTopRightHex().get());
+//        }
+//
+//        if (start.getRightHex().isPresent()) {
+//            addHexToStart(start.getRightHex().get());
+//        }
+//
+//        if (start.getBottomRightHex().isPresent()) {
+//            addHexToStart(start.getBottomRightHex().get());
+//        }
+//
+//        if (start.getBottomLeftHex().isPresent()) {
+//            addHexToStart(start.getBottomLeftHex().get());
+//        }
+//
+//        if (start.getLeftHex().isPresent()) {
+//            addHexToStart(start.getLeftHex().get());
+//        }
+//
+//        if (start.getTopLeftHex().isPresent()) {
+//            addHexToStart(start.getTopLeftHex().get());
+//        }
     }
 
     private static void addNeighbour(Hexagon start, Location neighbour, Location mostNorth) {
-        handledLocations.add(neighbour.getId());
-        handleNeighbours(start);
-        double bearing = mostNorth.getCenterLocation().bearing(neighbour.getCenterLocation());
-        HexagonsSide neighboursSide = getBasicHexagonSide(bearing);
-        System.out.println("Adding " + neighbour.getName() + " to " + mostNorth.getName() + " at " + neighboursSide + " bearing: " + bearing);
-        if (neighboursSide == HexagonsSide.TOPRIGHT) {
-            start.addToTopRight(neighbour);
-        } else if (neighboursSide == HexagonsSide.RIGHT) {
-            start.addToRight(neighbour);
-        } else if (neighboursSide == HexagonsSide.BOTTOMRIGHT) {
-            start.addToBottomRight(neighbour);
-        } else if (neighboursSide == HexagonsSide.BOTTOMLEFT) {
-            start.addToBottomLeft(neighbour);
-        } else if (neighboursSide == HexagonsSide.LEFT) {
-            start.addToLeft(neighbour);
-        } else if (neighboursSide == HexagonsSide.TOPLEFT) {
-            start.addToTopLeft(neighbour);
+        if (!handledLocations.contains(neighbour.getId())) {
+            handledLocations.add(neighbour.getId());
+            double bearing = mostNorth.getCenterLocation().bearing(neighbour.getCenterLocation());
+            HexagonsSide neighboursSide = getBasicHexagonSide(bearing);
+            System.out.println("------ Adding " + neighbour.getName() + " to " + mostNorth.getName() + " at " + neighboursSide + " bearing: " + bearing);
+            if (neighboursSide == HexagonsSide.TOPRIGHT) {
+//            start.addToTopRight(neighbour);
+                Hexagon hexagon = buildTopRight(neighbour.getName(), start.getTopRightPoint(), neighbour.getId());
+                hexs.add(checkIfIsFree(hexagon, neighboursSide));
+            } else if (neighboursSide == HexagonsSide.RIGHT) {
+                Hexagon hexagon = buildRight(neighbour.getName(), start.getRightPoint(), neighbour.getId());
+                hexs.add(checkIfIsFree(hexagon, neighboursSide));
+//            start.addToRight(neighbour);
+            } else if (neighboursSide == HexagonsSide.BOTTOMRIGHT) {
+                Hexagon hexagon = buildBottomRight(neighbour.getName(), start.getBottomRightPoint(), neighbour.getId());
+                hexs.add(checkIfIsFree(hexagon, neighboursSide));
+//            start.addToBottomRight(neighbour);
+            } else if (neighboursSide == HexagonsSide.BOTTOMLEFT) {
+                Hexagon hexagon = buildBottomLeftHex(neighbour.getName(), start.getBottomLeftPoint(), neighbour.getId());
+                hexs.add(checkIfIsFree(hexagon, neighboursSide));
+//            start.addToBottomLeft(neighbour);
+            } else if (neighboursSide == HexagonsSide.LEFT) {
+                Hexagon hexagon = buildLeftHex(neighbour.getName(), start.getLeftPoint(), neighbour.getId());
+                hexs.add(checkIfIsFree(hexagon, neighboursSide));
+//            start.addToLeft(neighbour);
+            } else if (neighboursSide == HexagonsSide.TOPLEFT) {
+                Hexagon hexagon = buildTopLeft(neighbour.getName(), start.getTopLeftPoint(), neighbour.getId());
+                hexs.add(checkIfIsFree(hexagon, neighboursSide));
+//            start.addToTopLeft(neighbour);
+            }
         }
+    }
+
+    private static Hexagon checkIfIsFree(Hexagon newHex, HexagonsSide side) {
+        Optional<Hexagon> firstThere = Optional.empty();
+        for (Hexagon h: hexs) {
+            boolean equals = true;
+            for (int i = 0; i < h.getPoints().size(); i++) {
+                LocationCoordinate2D hLoc = h.getPoints().get(i);
+                LocationCoordinate2D newLoc = newHex.getPoints().get(i);
+                if (hLoc.getLatitude() != newLoc.getLatitude() || hLoc.getLongitude() != newLoc.getLongitude()) {
+                    equals = false;
+                }
+                if (!equals) {
+                    break;
+                }
+            }
+            if (equals) {
+                System.out.println("POSITION IS OCCUPIED! " + h.getName() + " new: " + newHex.getName());
+                firstThere = Optional.of(h);
+                break;
+            }
+        }
+        if (firstThere.isPresent()) {
+            System.out.println("Something was here first: " + firstThere.get().getName() + " ," + newHex.getName());
+            if (side == HexagonsSide.RIGHT) {
+                Hexagon shifted = buildRight(newHex.getName(), firstThere.get().getRightPoint(), newHex.getId());
+                return checkIfIsFree(shifted, side);
+            } else {
+                Hexagon shifted = buildLeftHex(newHex.getName(), firstThere.get().getLeftPoint(), newHex.getId());
+                return checkIfIsFree(shifted, side);
+            }
+        }
+        System.out.println("First there was nil: " + newHex.getName());
+        return newHex;
     }
 
     private static Location findClosest(Location toLoc, ArrayList<Location> fromLocations) {
@@ -241,6 +768,15 @@ public class HexagonBuilder {
 //        return HexagonsSide.LEFT;
     }
 
+    static public ArrayList<Location> sortByDistanceAsLocation(Location fromLoc, ArrayList<Location> locations) {
+        ArrayList<Location> sorted = new ArrayList<>();
+        ArrayList<LocationWithDistance> sortedWithDistance = sortByDistance(fromLoc, locations);
+        for (LocationWithDistance lwd: sortedWithDistance) {
+            sorted.add(lwd.getLocation());
+        }
+        return sorted;
+    }
+
     public static ArrayList<LocationWithDistance> sortByDistance(Location fromLoc, ArrayList<Location> locations) {
         ArrayList<LocationWithDistance> locationsWithDistance = new ArrayList<>();
         for (Location loc : locations) {
@@ -308,6 +844,13 @@ public class HexagonBuilder {
     }
 
     private static Boolean lhsIsOnWest(LocationCoordinate2D lhs, LocationCoordinate2D rhs) {
+        if (lhs.getLongitude() - rhs.getLongitude() < 0) {
+            return  true;
+        }
+        return false;
+    }
+
+    private static Boolean lhsIsOnEast(LocationCoordinate2D lhs, LocationCoordinate2D rhs) {
         if (lhs.getLongitude() - rhs.getLongitude() > 0) {
             return  true;
         }
@@ -321,7 +864,14 @@ public class HexagonBuilder {
         return false;
     }
 
-    private static Location findMostNorth(ArrayList<Location> locations) {
+    private static Boolean lhsInOnSouth(LocationCoordinate2D lhs, LocationCoordinate2D rhs) {
+        if (lhs.getLatitude() - rhs.getLatitude() < 0) {
+            return true;
+        }
+        return false;
+    }
+
+    static Location findMostNorth(ArrayList<Location> locations) {
         Location max = locations.get(0);
         for (Location l: locations) {
             if (lhsInOnNorth(l.getCenterLocation(),max.getCenterLocation())) {
@@ -330,5 +880,36 @@ public class HexagonBuilder {
         }
         return max;
     }
+
+    static Location findMostSouth(ArrayList<Location> locations) {
+        Location max = locations.get(0);
+        for (Location l: locations) {
+            if (lhsInOnSouth(l.getCenterLocation(),max.getCenterLocation())) {
+                max = l;
+            }
+        }
+        return max;
+    }
+
+    static Location findMostWest(ArrayList<Location> locations) {
+        Location max = locations.get(0);
+        for (Location l: locations) {
+            if (lhsIsOnWest(l.getCenterLocation(),max.getCenterLocation())) {
+                max = l;
+            }
+        }
+        return max;
+    }
+
+    static Location findMostEast(ArrayList<Location> locations) {
+        Location max = locations.get(0);
+        for (Location l: locations) {
+            if (lhsIsOnEast(l.getCenterLocation(),max.getCenterLocation())) {
+                max = l;
+            }
+        }
+        return max;
+    }
+
 
 }

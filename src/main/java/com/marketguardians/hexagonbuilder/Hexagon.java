@@ -1,5 +1,6 @@
 package com.marketguardians.hexagonbuilder;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class Hexagon {
@@ -30,18 +31,9 @@ public class Hexagon {
         this.id = id;
     }
 
-    public void printAllPoints() {
-        printPoints();
-        topRightHex.ifPresent(Hexagon::printAllPoints);
-        rightHex.ifPresent(Hexagon::printAllPoints);
-        bottomRightHex.ifPresent(Hexagon::printAllPoints);
-        bottomLeftHex.ifPresent(Hexagon::printAllPoints);
-        leftHex.ifPresent(Hexagon::printAllPoints);
-        topLeftHex.ifPresent(Hexagon::printAllPoints);
-    }
-
 
     public void printPoints() {
+        System.out.println("Printing: " + name);
         System.out.println(topRightPoint.getLongitude() + ", " + topRightPoint.getLatitude());
         System.out.println(rightPoint.getLongitude() + ", " + rightPoint.getLatitude());
         System.out.println(bottomRightPoint.getLongitude() + ", " + bottomRightPoint.getLatitude());
@@ -61,13 +53,15 @@ public class Hexagon {
             }
             System.out.println("Found free in: " + bl.name + " for: " + location.getName());
             Hexagon bottomLeft = HexagonBuilder.buildBottomLeftHex(location.getName(), bl.getBottomLeftPoint(), location.getId());
+            bottomLeft.topRightHex = Optional.of(this);
             bl.bottomLeftHex = Optional.of(bottomLeft);
-            HexagonBuilder.handleNeighbours(bl.bottomLeftHex.get());
+//            HexagonBuilder.handleNeighbours(bl.bottomLeftHex.get());
         } else {
             System.out.println("Left was free in: " + name + " for: " + location.getName());
             Hexagon bottomLeft = HexagonBuilder.buildBottomLeftHex(location.getName(), bottomLeftPoint, location.getId());
+            bottomLeft.topRightHex = Optional.of(this);
             this.bottomLeftHex = Optional.of(bottomLeft);
-            HexagonBuilder.handleNeighbours(bottomLeftHex.get());
+//            HexagonBuilder.handleNeighbours(bottomLeftHex.get());
         }
     }
 
@@ -81,15 +75,28 @@ public class Hexagon {
             }
             System.out.println("Found free in: " + left.name + " for: " + location.getName());
             Hexagon newLeft = HexagonBuilder.buildLeftHex(location.getName(), left.getLeftPoint(), location.getId());
+            newLeft.rightHex = Optional.of(this);
             left.leftHex = Optional.of(newLeft);
-            HexagonBuilder.handleNeighbours(left.leftHex.get());
+//            HexagonBuilder.handleNeighbours(left.leftHex.get());
 
         } else {
             System.out.println("Left was free in: " + name + " for: " + location.getName());
             Hexagon leftHex = HexagonBuilder.buildLeftHex(location.getName(), leftPoint, location.getId());
+            leftHex.rightHex = Optional.of(this);
             this.leftHex = Optional.of(leftHex);
-            HexagonBuilder.handleNeighbours(this.leftHex.get());
+//            HexagonBuilder.handleNeighbours(this.leftHex.get());
         }
+    }
+
+    public ArrayList<LocationCoordinate2D> getPoints() {
+        ArrayList<LocationCoordinate2D> points = new ArrayList<>();
+        points.add(topRightPoint);
+        points.add(rightPoint);
+        points.add(bottomRightPoint);
+        points.add(bottomLeftPoint);
+        points.add(leftPoint);
+        points.add(topLeftPoint);
+        return points;
     }
 
     public void addToTopLeft(Location location) {
@@ -102,13 +109,15 @@ public class Hexagon {
             }
             System.out.println("Found free in: " + topLeft.name + " for: " + location.getName());
             Hexagon newTopLeft = HexagonBuilder.buildTopLeft(location.getName(), topLeft.getTopLeftPoint(), location.getId());
+            newTopLeft.bottomRightHex = Optional.of(this);
             topLeft.topLeftHex = Optional.of(newTopLeft);
-            HexagonBuilder.handleNeighbours(topLeft.topLeftHex.get());
+//            HexagonBuilder.handleNeighbours(topLeft.topLeftHex.get());
         } else {
             System.out.println("Left was free in: " + name + " for: " + location.getName());
             Hexagon leftHex = HexagonBuilder.buildTopLeft(location.getName(), topLeftPoint, location.getId());
+            leftHex.bottomRightHex = Optional.of(this);
             this.topLeftHex = Optional.of(leftHex);
-            HexagonBuilder.handleNeighbours(this.topLeftHex.get());
+//            HexagonBuilder.handleNeighbours(this.topLeftHex.get());
 
         }
     }
@@ -123,13 +132,15 @@ public class Hexagon {
             }
             System.out.println("Found free in: " + topRight.name + " for: " + location.getName());
             Hexagon newTopRight = HexagonBuilder.buildTopRight(location.getName(), topRight.getTopRightPoint(), location.getId());
+            newTopRight.bottomLeftHex = Optional.of(this);
             topRight.topRightHex = Optional.of(newTopRight);
-            HexagonBuilder.handleNeighbours(topRight.topRightHex.get());
+//            HexagonBuilder.handleNeighbours(topRight.topRightHex.get());
         } else {
             System.out.println("Left was free in: " + name + " for: " + location.getName());
             Hexagon topRight = HexagonBuilder.buildTopRight(location.getName(), topRightPoint, location.getId());
+            topRight.bottomLeftHex = Optional.of(this);
             this.topRightHex = Optional.of(topRight);
-            HexagonBuilder.handleNeighbours(this.topRightHex.get());
+//            HexagonBuilder.handleNeighbours(this.topRightHex.get());
         }
     }
 
@@ -143,14 +154,16 @@ public class Hexagon {
             }
             System.out.println("Found free in: " + right.name + " for: " + location.getName());
             Hexagon newRight = HexagonBuilder.buildRight(location.getName(), right.getRightPoint(), location.getId());
+            newRight.leftHex = Optional.of(this);
             right.rightHex = Optional.of(newRight);
-            HexagonBuilder.handleNeighbours(right.rightHex.get());
+//            HexagonBuilder.handleNeighbours(right.rightHex.get());
 
         } else {
             System.out.println("Left was free in: " + name + " for: " + location.getName());
             Hexagon right = HexagonBuilder.buildRight(location.getName(), rightPoint, location.getId());
+            right.leftHex = Optional.of(this);
             this.rightHex = Optional.of(right);
-            HexagonBuilder.handleNeighbours(this.rightHex.get());
+//            HexagonBuilder.handleNeighbours(this.rightHex.get());
 
         }
     }
@@ -165,13 +178,15 @@ public class Hexagon {
             }
             System.out.println("Found free in: " + bottomRight.name + " for: " + location.getName());
             Hexagon newBottomRight = HexagonBuilder.buildBottomRight(location.getName(), bottomRight.getBottomRightPoint(), location.getId());
+            newBottomRight.topLeftHex = Optional.of(this);
             bottomRight.bottomRightHex = Optional.of(newBottomRight);
-            HexagonBuilder.handleNeighbours(bottomRight.bottomRightHex.get());
+//            HexagonBuilder.handleNeighbours(bottomRight.bottomRightHex.get());
         } else {
             System.out.println("Left was free in: " + name + " for: " + location.getName());
             Hexagon bottomRight = HexagonBuilder.buildBottomRight(location.getName(), bottomRightPoint, location.getId());
+            bottomRight.topLeftHex = Optional.of(this);
             this.bottomRightHex = Optional.of(bottomRight);
-            HexagonBuilder.handleNeighbours(this.bottomRightHex.get());
+//            HexagonBuilder.handleNeighbours(this.bottomRightHex.get());
         }
     }
 

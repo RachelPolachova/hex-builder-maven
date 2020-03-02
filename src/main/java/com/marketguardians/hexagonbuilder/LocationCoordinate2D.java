@@ -70,6 +70,10 @@ public class LocationCoordinate2D {
         this.longitude = longitude;
     }
 
+    public void print() {
+        System.out.println(longitude + ", " + latitude);
+    }
+
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
