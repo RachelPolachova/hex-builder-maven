@@ -118,7 +118,10 @@ public class HexagonBuilder {
             } else {
                 poradieJ = 99;
             }
-            addToMatrix(loc, poradieI, poradieJ);
+
+            Pozicia poziciaNovehoHexu = checkObsadenost(poradieI, poradieJ);
+
+            addToMatrix(loc, poziciaNovehoHexu.getI(), poziciaNovehoHexu.getJ());
 //            System.out.println("Loc: " + loc.getName() + " poradie: " + poradieI + ", " + poradieJ + " lat: " + loc.getCenterLocation().getLatitude());
         }
         System.out.println("---- printing points -----");
@@ -132,11 +135,40 @@ public class HexagonBuilder {
                 }
             }
         }
-        for (ArrayList<Optional<Hexagon>> matrix : hexagonMatrix) {
-            for (Optional<Hexagon> hex : matrix) {
+    }
 
+    private static Pozicia checkObsadenost(int i, int j) {
+        if (hexagonMatrix.get(i).get(j).isPresent()) {
+
+            //sused napravo
+            if (j < hexagonMatrix.get(i).size() - 1) {
+                if (!hexagonMatrix.get(i).get(j + 1).isPresent()) {
+                    return new Pozicia(i, j+1, HexagonsSide.RIGHT);
+                }
+            }
+
+            //sused nalavo
+            if (j > 0) {
+                if (!hexagonMatrix.get(i).get(j-1).isPresent()) {
+                    return new Pozicia(i, j-1, HexagonsSide.RIGHT);
+                }
+            }
+
+            //sused dole
+            if (i < hexagonMatrix.size() - 1) {
+                if (!hexagonMatrix.get(i+1).get(j).isPresent()) {
+                    return new Pozicia(i+1, j, HexagonsSide.RIGHT);
+                }
+            }
+
+            //sused hore
+            if (i > 0) {
+                if (!hexagonMatrix.get(i-1).get(j).isPresent()) {
+                    return new Pozicia(i-1, j, HexagonsSide.RIGHT);
+                }
             }
         }
+        return new Pozicia(i, j, HexagonsSide.RIGHT);
     }
 
     private static void initMatrix() {
@@ -168,24 +200,30 @@ public class HexagonBuilder {
                     System.out.println("!!!DORIES TOP");
                 } else if (side == HexagonsSide.TOPRIGHT) {
                     Hexagon novy = buildBottomLeftHex(location.getName(), najHex.getBottomLeftPoint(), location.getId());
-                    hexagonMatrix.get(i).set(j, Optional.of(novy));
+//                    hexagonMatrix.get(i).set(j, Optional.of(novy));
+                    hexagonMatrix.get(najblizsi.getI()+1).set(najblizsi.getJ()-1, Optional.of(novy));
                 } else if (side == HexagonsSide.RIGHT) {
                     Hexagon novy = buildLeftHex(location.getName(), najHex.getLeftPoint(), location.getId());
-                    hexagonMatrix.get(i).set(j, Optional.of(novy));
+//                    hexagonMatrix.get(i).set(j, Optional.of(novy));
+                    hexagonMatrix.get(najblizsi.getI()).set(najblizsi.getJ()-1, Optional.of(novy));
                 } else if (side == HexagonsSide.BOTTOMRIGHT) {
                     Hexagon novy = buildTopLeft(location.getName(), najHex.getTopLeftPoint(), location.getId());
-                    hexagonMatrix.get(i).set(j, Optional.of(novy));
+//                    hexagonMatrix.get(i).set(j, Optional.of(novy));
+                    hexagonMatrix.get(najblizsi.getI()-1).set(najblizsi.getJ()-1, Optional.of(novy));
                 } else if (side == HexagonsSide.BOTTOM) {
                     System.out.println("!!!DORIES BOTTOM");
                 } else if (side == HexagonsSide.BOTTOMLEFT) {
                     Hexagon novy = buildTopRight(location.getName(), najHex.getTopRightPoint(), location.getId());
-                    hexagonMatrix.get(i).set(j, Optional.of(novy));
+//                    hexagonMatrix.get(i).set(j, Optional.of(novy));
+                    hexagonMatrix.get(najblizsi.getI()-1).set(najblizsi.getJ()+1, Optional.of(novy));
                 } else if (side == HexagonsSide.LEFT) {
                     Hexagon novy = buildRight(location.getName(), najHex.getRightPoint(), location.getId());
-                    hexagonMatrix.get(i).set(j, Optional.of(novy));
+//                    hexagonMatrix.get(i).set(j, Optional.of(novy));
+                    hexagonMatrix.get(najblizsi.getI()).set(najblizsi.getJ()+1, Optional.of(novy));
                 } else { //top left
                     Hexagon novy = buildBottomRight(location.getName(), najHex.getBottomRightPoint(), location.getId());
-                    hexagonMatrix.get(i).set(j, Optional.of(novy));
+//                    hexagonMatrix.get(i).set(j, Optional.of(novy));
+                    hexagonMatrix.get(najblizsi.getI()+1).set(najblizsi.getJ()+1, Optional.of(novy));
                 }
             } else {
                 System.out.println("CHYBA, ZADNY HEX!");
@@ -292,6 +330,20 @@ public class HexagonBuilder {
                 }
             } else {
                 outOfOnBottom = true;
+            }
+
+            for (int x = j; x < hexagonMatrix.get(i).size(); x++) {
+                if (hexagonMatrix.get(i).get(x).isPresent()) {
+                    System.out.println("VRAIAM POZICIU Z FOR LOOP");
+                    return new Pozicia(i, x, HexagonsSide.RIGHT);
+                }
+            }
+
+            for (int x = j; x >= 0; x--) {
+                if (hexagonMatrix.get(i).get(x).isPresent()) {
+                    System.out.println("VRAIAM POZICIU Z FOR LOOP");
+                    return new Pozicia(i, x, HexagonsSide.LEFT);
+                }
             }
 
             shift++;
