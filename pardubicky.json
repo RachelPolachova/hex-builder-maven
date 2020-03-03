@@ -1,1 +1,40 @@
-{"layout":{"columns":0,"rows":0},"locations":[{"name":"okres Ústí nad Orlicí","id":"CZ0534","position":{"column":0,"row":0}},{"name":"okres Pardubice","id":"CZ0532","position":{"column":0,"row":0}},{"name":"okres Chrudim","id":"CZ0531","position":{"column":0,"row":0}},{"name":"okres Svitavy","id":"CZ0533","position":{"column":0,"row":0}}]}
+{
+  "layout": {
+    "columns": 2,
+    "rows": 2
+  },
+  "locations": [
+    {
+      "name": "okres Ústí nad Orlicí",
+      "id": "CZ0534",
+      "position": {
+        "column": 1,
+        "row": 0
+      }
+    },
+    {
+      "name": "okres Pardubice",
+      "id": "CZ0532",
+      "position": {
+        "column": 0,
+        "row": 0
+      }
+    },
+    {
+      "name": "okres Chrudim",
+      "id": "CZ0531",
+      "position": {
+        "column": 0,
+        "row": 1
+      }
+    },
+    {
+      "name": "okres Svitavy",
+      "id": "CZ0533",
+      "position": {
+        "column": 1,
+        "row": 1
+      }
+    }
+  ]
+}

@@ -15,10 +15,10 @@ public class App  {
 
     public static void handleOwnJSON() {
         JSONReader jsonReader = new JSONReader();
-        MatrixConfiguration matrixConfiguration = jsonReader.readOwnJson("kralovehradecky.json");
+        MatrixConfiguration matrixConfiguration = jsonReader.readOwnJson("pardubicky.json");
         HexagonBuilder hexagonBuilder = new HexagonBuilder();
         hexagonBuilder.handleMatrixConf(matrixConfiguration);
-        jsonReader.write("kralovehradecky-hexagons.json", hexagonBuilder.getHandledHexagons());
+        jsonReader.write("pradubicky-hexagons.json", hexagonBuilder.getHandledHexagons());
     }
 
     public static void spracujKraje() {
