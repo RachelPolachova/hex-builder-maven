@@ -18,7 +18,7 @@ public class App  {
         MatrixConfiguration matrixConfiguration = jsonReader.readOwnJson("jihomoravsky.json");
         HexagonBuilder hexagonBuilder = new HexagonBuilder();
         hexagonBuilder.handleMatrixConf(matrixConfiguration);
-        jsonReader.write("jmk-hexagons.json", hexagonBuilder.getHandledHexagons());
+        jsonReader.write("jihomoravsky-hexagons.json", hexagonBuilder.getHandledHexagons());
     }
 
     public static void spracujKraje() {

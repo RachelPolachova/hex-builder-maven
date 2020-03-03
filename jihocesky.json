@@ -1,1 +1,64 @@
-{"layout":{"columns":0,"rows":0},"locations":[{"name":"okres Písek","id":"CZ0314","position":{"column":0,"row":0}},{"name":"okres České Budějovice","id":"CZ0311","position":{"column":0,"row":0}},{"name":"okres Český Krumlov","id":"CZ0312","position":{"column":0,"row":0}},{"name":"okres Prachatice","id":"CZ0315","position":{"column":0,"row":0}},{"name":"okres Jindřichův Hradec","id":"CZ0313","position":{"column":0,"row":0}},{"name":"okres Tábor","id":"CZ0317","position":{"column":0,"row":0}},{"name":"okres Strakonice","id":"CZ0316","position":{"column":0,"row":0}}]}
+{
+  "layout":{
+    "columns":3,
+    "rows":3
+  },
+  "locations":[
+    {
+      "name":"okres Písek",
+      "id":"CZ0314",
+      "position":{
+        "column":1,
+        "row":0
+      }
+    },
+    {
+      "name":"okres České Budějovice",
+      "id":"CZ0311",
+      "position":{
+        "column":1,
+        "row":1
+      }
+    },
+    {
+      "name":"okres Český Krumlov",
+      "id":"CZ0312",
+      "position":{
+        "column":0,
+        "row":2
+      }
+    },
+    {
+      "name":"okres Prachatice",
+      "id":"CZ0315",
+      "position":{
+        "column":0,
+        "row":1
+      }
+    },
+    {
+      "name":"okres Jindřichův Hradec",
+      "id":"CZ0313",
+      "position":{
+        "column":2,
+        "row":1
+      }
+    },
+    {
+      "name":"okres Tábor",
+      "id":"CZ0317",
+      "position":{
+        "column":2,
+        "row":0
+      }
+    },
+    {
+      "name":"okres Strakonice",
+      "id":"CZ0316",
+      "position":{
+        "column":0,
+        "row":0
+      }
+    }
+  ]
+}
