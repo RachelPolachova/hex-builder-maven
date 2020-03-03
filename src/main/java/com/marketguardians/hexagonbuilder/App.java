@@ -18,8 +18,8 @@ public class App  {
 
     public static void testDataFromHandledJSON() {
         JSONReader jsonReader = new JSONReader();
-        ArrayList<Location> locations = jsonReader.parseHandledJSON("kraje-spracovane.json");
-        HexagonBuilder.checkniSusedov(locations);
+        ArrayList<Location> locations = jsonReader.parseHandledJSON("jednotlive-kraje-spracovane.json");
+//        HexagonBuilder.checkniSusedov(locations);
 //        System.out.println("-----------");
 //        double height = 0;
 //        double width = 0;
@@ -62,7 +62,7 @@ public class App  {
 
 //        System.out.println("spolu: " + height + " priemer: " + height/locations.size() + " rozdil: " + (mostNorth.getCenterLocation().getLatitude() - mostSouth.getCenterLocation().getLatitude()));
 //        System.out.println("spolu: " + width + " priemer: " + width/locations.size() + " rozdil: " + (mostEast.getCenterLocation().getLongitude() - mostWest.getCenterLocation().getLongitude()));
-//        HexagonBuilder.buildFromArray(locations);
+        HexagonBuilder.buildFromArray(locations);
     }
 
     public static void hexagonPrinter(Hexagon start) {
@@ -76,7 +76,7 @@ public class App  {
         jsonReader.readOnlyRefWith("jednotlive-kraje.geojson", "CZ064");
 //        jsonReader.read("jednotlive-kraje.geojson");
         ArrayList<Location> locations = new ArrayList<>();
-        ruianLocations.forEach(location -> locations.add(new Location(location.getName(), location.getId(), location.getCenter(), location.getNeighboursIds())));
+        ruianLocations.forEach(location -> locations.add(new Location(location.getName(), location.getId(), location.getSouth(), location.getNeighboursIds())));
         jsonReader.write("jednotlive-kraje-spracovane.json", locations);
     }
 

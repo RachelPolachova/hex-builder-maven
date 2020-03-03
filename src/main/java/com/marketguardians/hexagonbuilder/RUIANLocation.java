@@ -53,6 +53,24 @@ public class RUIANLocation {
         return id;
     }
 
+    public LocationCoordinate2D getSouth() {
+        LocationCoordinate2D max = points.get(0);
+        for (LocationCoordinate2D point: points) {
+            if (lhsInOnSouth(point, max)) {
+                max = point;
+            }
+        }
+
+        return max;
+    }
+
+    private Boolean lhsInOnSouth(LocationCoordinate2D lhs, LocationCoordinate2D rhs) {
+        if (lhs.getLatitude() - rhs.getLatitude() < 0) {
+            return true;
+        }
+        return false;
+    }
+
     public LocationCoordinate2D getCenter() {
         LocationCoordinate2D center = new LocationCoordinate2D(0, 0);
 //        Point2D centroid = {0, 0};
