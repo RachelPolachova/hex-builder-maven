@@ -1,1 +1,16 @@
-{"layout":{"columns":0,"rows":0},"locations":[{"name":"okres Hlavní město Praha","id":"CZ0100","position":{"column":0,"row":0}}]}
+{
+  "layout": {
+    "columns": 1,
+    "rows": 1
+  },
+  "locations": [
+    {
+      "name": "okres Hlavní město Praha",
+      "id": "CZ0100",
+      "position": {
+        "column": 0,
+        "row": 0
+      }
+    }
+  ]
+}
