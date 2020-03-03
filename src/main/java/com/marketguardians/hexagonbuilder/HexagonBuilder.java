@@ -1,5 +1,6 @@
 package com.marketguardians.hexagonbuilder;
 
+import javax.print.event.PrintJobAdapter;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -62,6 +63,83 @@ public class HexagonBuilder {
         buildIntoArray(mostNorth, locations);
     }
 
+    private ArrayList<String> handled = new ArrayList<>();
+
+    public void susediaDoMatrixu(ArrayList<Location> locations) {
+        Location mosthNorth = findMostNorth(locations);
+        allLocations = locations;
+        locations.remove(mosthNorth);
+        initMatrix(4, 5);
+        Hexagon first = initHex(mosthNorth.getCenterLocation(), mosthNorth.getName(), mosthNorth.getId()); //zodpoveda liberci
+        hexagonMatrix.get(0).set(2, Optional.of(first));
+        locations = sortByDistanceAsLocation(mosthNorth,locations); //bacha, bez mostNorth
+        pridajLeftRight(0, 2, mosthNorth);
+
+        for (ArrayList<Optional<Hexagon>> riadok: hexagonMatrix) {
+            for (Optional<Hexagon> hex: riadok) {
+                hex.ifPresent(Hexagon::printPoints);
+            }
+        }
+    }
+
+    private void pridajDalsiRiadok(int i) {
+//        ArrayList<Optional<Hexagon>> riadok = hexagonMatrix.get(i);
+//        for (int x = 0; x < riadok.size(); x++) {
+//            Optional<Hexagon> hex = riadok.get(x);
+//            if (hex.isPresent()) {
+//                Location loc = getNeighbour(hex.get().getId());
+//                if (loc != null) {
+//                    for (String id: loc.getNeighboursIds()) {
+//                        Location neighbour = getNeighbour(id);
+//                        if (neighbour != null) {
+//                            if (!handled.contains(neighbour.getId())) {
+//                                double bearing = loc.getCenterLocation().bearing(neighbour.getCenterLocation());
+//                                HexagonsSide side = getBasicHexagonSide(bearing);
+//                                if (side == HexagonsSide.RIGHT) {
+//                                    //najdi najblizsiu poziciu napravo
+//                                    for (int pom = x; pom < riadok.size(); pom++) {
+////                                        if (riadok.get(i).get());
+//                                    }
+//                                } else if (side == HexagonsSide.LEFT) {
+//
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+    }
+
+
+    private Location getNeighbour(String id) {
+        for (Location loc: allLocations) {
+            if (loc.getId().equals(id)) {
+                return loc;
+            }
+        }
+        return null;
+    }
+
+    private void pridajLeftRight(int i, int j, Location location) {
+        for (String id: location.getNeighboursIds()) {
+            Location pridavana = getNeighbour(id);
+            if (pridavana != null) {
+                double bearing = location.getCenterLocation().bearing(pridavana.getCenterLocation());
+                HexagonsSide side = getBasicHexagonSide(bearing);
+                if (side == HexagonsSide.RIGHT) {
+                    handled.add(pridavana.getId());
+                    Hexagon novy = buildRight(pridavana.getName(), hexagonMatrix.get(i).get(j).get().getRightPoint(), pridavana.getId());
+                    hexagonMatrix.get(i).set(j+1, Optional.of(novy));
+                } else if (side == HexagonsSide.LEFT) {
+                    handled.add(pridavana.getId());
+                    Hexagon novy = buildRight(pridavana.getName(), hexagonMatrix.get(i).get(j).get().getRightPoint(), pridavana.getId());
+                    hexagonMatrix.get(i).set(j-1, Optional.of(novy));
+                }
+            }
+        }
+    }
+
     private static int getPoradieI(double vyska, double jedenRiadok, int riadky) {
         for (int i=1; i<=riadky; i++) {
             if (vyska <= jedenRiadok * i) {
@@ -99,8 +177,8 @@ public class HexagonBuilder {
         Location mostSouth = findMostSouth(locations);
         Location mostWest = findMostWest(locations);
         Location mostEast = findMostEast(locations);
-        int riadky = 4;
-        int stlpce = 7;
+        int riadky = 5;
+        int stlpce = 5;
         double diffVyska = mostNorth.getCenterLocation().getLatitude() - mostSouth.getCenterLocation().getLatitude();
         double diffSirka = mostEast.getCenterLocation().getLongitude() - mostWest.getCenterLocation().getLongitude();
         System.out.println("diffVyska: " + diffVyska + " diffSirka: " + diffSirka);
