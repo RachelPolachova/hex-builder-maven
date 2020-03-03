@@ -182,4 +182,8 @@ public class HexagonBuilder {
         }
         return max;
     }
+
+    public ArrayList<Hexagon> getHandledHexagons() {
+        return handledHexagons;
+    }
 }

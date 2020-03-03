@@ -1,0 +1,64 @@
+{
+  "layout":{
+    "columns":3,
+    "rows":4
+  },
+  "locations":[
+    {
+      "name":"okres Hodonín",
+      "id":"CZ0645",
+      "position":{
+        "column":2,
+        "row":2
+      }
+    },
+    {
+      "name":"okres Znojmo",
+      "id":"CZ0647",
+      "position":{
+        "column":0,
+        "row":2
+      }
+    },
+    {
+      "name":"okres Blansko",
+      "id":"CZ0641",
+      "position":{
+        "column":2,
+        "row":0
+      }
+    },
+    {
+      "name":"okres Brno-venkov",
+      "id":"CZ0643",
+      "position":{
+        "column":1,
+        "row":2
+      }
+    },
+    {
+      "name":"okres Brno-město",
+      "id":"CZ0642",
+      "position":{
+        "column":1,
+        "row":1
+      }
+    },
+    {
+      "name":"okres Vyškov",
+      "id":"CZ0646",
+      "position":{
+        "column":2,
+        "row":1
+      }
+    },
+    {
+      "name":"okres Břeclav",
+      "id":"CZ0644",
+      "position":{
+        "column":1,
+        "row":3
+      }
+    }
+  ]
+}

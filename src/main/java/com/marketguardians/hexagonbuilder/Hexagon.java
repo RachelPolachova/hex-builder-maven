@@ -47,6 +47,7 @@ public class Hexagon {
         points.add(bottomLeftPoint);
         points.add(leftPoint);
         points.add(topLeftPoint);
+        points.add(topRightPoint);
         return points;
     }
 
