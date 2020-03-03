@@ -1,4 +1,4 @@
-package com.marketguardians.hexagonbuilder;
+package com.marketguardians.hexagonbuilder.model;
 
 import java.util.ArrayList;
 
