@@ -1,1 +1,104 @@
-{"layout":{"columns":0,"rows":0},"locations":[{"name":"okres Kladno","id":"CZ0203","position":{"column":0,"row":0}},{"name":"okres Kolín","id":"CZ0204","position":{"column":0,"row":0}},{"name":"okres Příbram","id":"CZ020B","position":{"column":0,"row":0}},{"name":"okres Benešov","id":"CZ0201","position":{"column":0,"row":0}},{"name":"okres Nymburk","id":"CZ0208","position":{"column":0,"row":0}},{"name":"okres Praha-východ","id":"CZ0209","position":{"column":0,"row":0}},{"name":"okres Kutná Hora","id":"CZ0205","position":{"column":0,"row":0}},{"name":"okres Mladá Boleslav","id":"CZ0207","position":{"column":0,"row":0}},{"name":"okres Praha-západ","id":"CZ020A","position":{"column":0,"row":0}},{"name":"okres Beroun","id":"CZ0202","position":{"column":0,"row":0}},{"name":"okres Mělník","id":"CZ0206","position":{"column":0,"row":0}},{"name":"okres Rakovník","id":"CZ020C","position":{"column":0,"row":0}}]}
+{
+  "layout": {
+    "columns": 5,
+    "rows": 4
+  },
+  "locations": [
+    {
+      "name": "okres Kladno",
+      "id": "CZ0203",
+      "position": {
+        "column": 2,
+        "row": 1
+      }
+    },
+    {
+      "name": "okres Kolín",
+      "id": "CZ0204",
+      "position": {
+        "column": 4,
+        "row": 2
+      }
+    },
+    {
+      "name": "okres Příbram",
+      "id": "CZ020B",
+      "position": {
+        "column": 0,
+        "row": 3
+      }
+    },
+    {
+      "name": "okres Benešov",
+      "id": "CZ0201",
+      "position": {
+        "column": 1,
+        "row": 3
+      }
+    },
+    {
+      "name": "okres Nymburk",
+      "id": "CZ0208",
+      "position": {
+        "column": 4,
+        "row": 1
+      }
+    },
+    {
+      "name": "okres Praha-východ",
+      "id": "CZ0209",
+      "position": {
+        "column": 3,
+        "row": 2
+      }
+    },
+    {
+      "name": "okres Kutná Hora",
+      "id": "CZ0205",
+      "position": {
+        "column": 2,
+        "row": 3
+      }
+    },
+    {
+      "name": "okres Mladá Boleslav",
+      "id": "CZ0207",
+      "position": {
+        "column": 4,
+        "row": 0
+      }
+    },
+    {
+      "name": "okres Praha-západ",
+      "id": "CZ020A",
+      "position": {
+        "column": 2,
+        "row": 2
+      }
+    },
+    {
+      "name": "okres Beroun",
+      "id": "CZ0202",
+      "position": {
+        "column": 1,
+        "row": 2
+      }
+    },
+    {
+      "name": "okres Mělník",
+      "id": "CZ0206",
+      "position": {
+        "column": 3,
+        "row": 0
+      }
+    },
+    {
+      "name": "okres Rakovník",
+      "id": "CZ020C",
+      "position": {
+        "column": 1,
+        "row": 1
+      }
+    }
+  ]
+}
