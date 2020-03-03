@@ -11,27 +11,36 @@ import java.util.ArrayList;
 public class App  {
     public static void main(String[] args) {
 //        testGetDataFromJSON();
-        testDataFromHandledJSON();
+//        testDataFromHandledJSON();
 //        testDataFromJSONJHM();
+        testSusediaDoMatrixu();
+    }
 
+    public static void testSusediaDoMatrixu() {
+        JSONReader jsonReader = new JSONReader();
+        ArrayList<Location> locations = jsonReader.parseHandledJSON("kraje-spracovane.json");
+        locations = HexagonBuilder.spracujBezSuseda(locations);
+        HexagonBuilder builder = new HexagonBuilder();
+        HexagonBuilder.checkniSusedov(locations);
+        builder.susediaDoMatrixu(locations);
     }
 
     public static void testDataFromHandledJSON() {
         JSONReader jsonReader = new JSONReader();
         ArrayList<Location> locations = jsonReader.parseHandledJSON("kraje-spracovane.json");
-        HexagonBuilder.checkniSusedov(locations);
-//        System.out.println("-----------");
-//        double height = 0;
-//        double width = 0;
-//        for (Location location: locations) {
-////            System.out.println("-----------");
-//            System.out.println(location.getName());
-//            location.getCenterLocation().print();
-//            height += location.getCenterLocation().getLatitude();
-//            width += location.getCenterLocation().getLongitude();
-////            System.out.println(location.getName() + ": ");
-////            location.printNeighbours();
-//        }
+        HexagonBuilder.checkniSusedov(HexagonBuilder.spracujBezSuseda(locations));
+        System.out.println("-----------");
+        double height = 0;
+        double width = 0;
+        for (Location location: locations) {
+//            System.out.println("-----------");
+            System.out.println(location.getName());
+            location.getCenterLocation().print();
+            height += location.getCenterLocation().getLatitude();
+            width += location.getCenterLocation().getLongitude();
+//            System.out.println(location.getName() + ": ");
+//            location.printNeighbours();
+        }
 //        HexagonBuilder hexagonBuilder = new HexagonBuilder();
 //        hexagonBuilder.getHexArray(locations);
 //        System.out.println("PRINTING COORDS!");
@@ -50,19 +59,19 @@ public class App  {
 //            hex.printPoints();
 //        }
 
-//        Location mostNorth = HexagonBuilder.findMostNorth(locations);
-//        Location mostWest = HexagonBuilder.findMostWest(locations);
-//        Location mostEast = HexagonBuilder.findMostEast(locations);
-//        Location mostSouth = HexagonBuilder.findMostSouth(locations);
-//
-//        System.out.println("NORTH: " + mostNorth.getName());
-//        System.out.println("WEST: " + mostWest.getName());
-//        System.out.println("EAST: " + mostEast.getName());
-//        System.out.println("SOUTH: " + mostSouth.getName());
+        Location mostNorth = HexagonBuilder.findMostNorth(locations);
+        Location mostWest = HexagonBuilder.findMostWest(locations);
+        Location mostEast = HexagonBuilder.findMostEast(locations);
+        Location mostSouth = HexagonBuilder.findMostSouth(locations);
+
+        System.out.println("NORTH: " + mostNorth.getName());
+        System.out.println("WEST: " + mostWest.getName());
+        System.out.println("EAST: " + mostEast.getName());
+        System.out.println("SOUTH: " + mostSouth.getName());
 
 //        System.out.println("spolu: " + height + " priemer: " + height/locations.size() + " rozdil: " + (mostNorth.getCenterLocation().getLatitude() - mostSouth.getCenterLocation().getLatitude()));
 //        System.out.println("spolu: " + width + " priemer: " + width/locations.size() + " rozdil: " + (mostEast.getCenterLocation().getLongitude() - mostWest.getCenterLocation().getLongitude()));
-//        HexagonBuilder.buildFromArray(locations);
+        HexagonBuilder.buildFromArray(locations);
     }
 
     public static void hexagonPrinter(Hexagon start) {
