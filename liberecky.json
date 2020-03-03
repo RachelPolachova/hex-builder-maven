@@ -1,1 +1,40 @@
-{"layout":{"columns":0,"rows":0},"locations":[{"name":"okres Jablonec nad Nisou","id":"CZ0512","position":{"column":0,"row":0}},{"name":"okres Liberec","id":"CZ0513","position":{"column":0,"row":0}},{"name":"okres Česká Lípa","id":"CZ0511","position":{"column":0,"row":0}},{"name":"okres Semily","id":"CZ0514","position":{"column":0,"row":0}}]}
+{
+  "layout": {
+    "columns": 2,
+    "rows": 3
+  },
+  "locations": [
+    {
+      "name": "okres Jablonec nad Nisou",
+      "id": "CZ0512",
+      "position": {
+        "column": 1,
+        "row": 1
+      }
+    },
+    {
+      "name": "okres Liberec",
+      "id": "CZ0513",
+      "position": {
+        "column": 1,
+        "row": 0
+      }
+    },
+    {
+      "name": "okres Česká Lípa",
+      "id": "CZ0511",
+      "position": {
+        "column": 0,
+        "row": 1
+      }
+    },
+    {
+      "name": "okres Semily",
+      "id": "CZ0514",
+      "position": {
+        "column": 1,
+        "row": 2
+      }
+    }
+  ]
+}
