@@ -36,6 +36,24 @@ class Pozicia {
     }
 }
 
+class SimpleLocation {
+    private String name;
+    private String id;
+
+    public SimpleLocation(String name, String id) {
+        this.name = name;
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getId() {
+        return id;
+    }
+}
+
 public class HexagonBuilder {
 
     enum HexagonsSide {
@@ -63,52 +81,73 @@ public class HexagonBuilder {
         buildIntoArray(mostNorth, locations);
     }
 
-    private ArrayList<String> handled = new ArrayList<>();
+    private ArrayList<ArrayList<Optional<Hexagon>>> matrix = new ArrayList<>(new ArrayList<>());
+    private ArrayList<ArrayList<Optional<SimpleLocation>>> customLocationMatrix = new ArrayList<>(new ArrayList<>());
+    private ArrayList<ArrayList<Hexagon>> hexagonLayout = new ArrayList<>();
 
-    public void susediaDoMatrixu(ArrayList<Location> locations) {
-        Location mosthNorth = findMostNorth(locations);
-        allLocations = locations;
-        locations.remove(mosthNorth);
-        initMatrix(4, 5);
-        Hexagon first = initHex(mosthNorth.getCenterLocation(), mosthNorth.getName(), mosthNorth.getId()); //zodpoveda liberci
-        hexagonMatrix.get(0).set(2, Optional.of(first));
-        locations = sortByDistanceAsLocation(mosthNorth,locations); //bacha, bez mostNorth
-        pridajLeftRight(0, 2, mosthNorth);
+    private ArrayList<Hexagon> handledHexagons = new ArrayList<>();
 
-        for (ArrayList<Optional<Hexagon>> riadok: hexagonMatrix) {
-            for (Optional<Hexagon> hex: riadok) {
-                hex.ifPresent(Hexagon::printPoints);
+    public void handleMatrixConf(MatrixConf matrixConf) {
+        int rows = matrixConf.getLayout().getRows();
+        int columns = matrixConf.getLayout().getColumns();
+        initConfMatrix(rows, columns);
+        initCustomLocMatrix(rows, columns);
+
+        for (ArrayList<Hexagon> riadok: hexagonLayout) {
+            for (Hexagon hex: riadok) {
+                hex.printPoints();
+            }
+        }
+
+        for (CustomLocation location: matrixConf.getLocations()) {
+            Hexagon realHex = hexagonLayout.get(location.getPosition().getRow()).get(location.getPosition().getColumn());
+            realHex.setName(location.getName());
+            realHex.setId(location.getId());
+            handledHexagons.add(realHex);
+        }
+
+        for (Hexagon h: handledHexagons) {
+            h.printPoints();
+        }
+
+    }
+
+    private void initConfMatrix(int rows, int columns) {
+        for (int i = 0; i < rows; i++) {
+            matrix.add(new ArrayList<>());
+            for (int j = 0; j < columns; j++) {
+                matrix.get(i).add(Optional.empty());
             }
         }
     }
 
-    private void pridajDalsiRiadok(int i) {
-//        ArrayList<Optional<Hexagon>> riadok = hexagonMatrix.get(i);
-//        for (int x = 0; x < riadok.size(); x++) {
-//            Optional<Hexagon> hex = riadok.get(x);
-//            if (hex.isPresent()) {
-//                Location loc = getNeighbour(hex.get().getId());
-//                if (loc != null) {
-//                    for (String id: loc.getNeighboursIds()) {
-//                        Location neighbour = getNeighbour(id);
-//                        if (neighbour != null) {
-//                            if (!handled.contains(neighbour.getId())) {
-//                                double bearing = loc.getCenterLocation().bearing(neighbour.getCenterLocation());
-//                                HexagonsSide side = getBasicHexagonSide(bearing);
-//                                if (side == HexagonsSide.RIGHT) {
-//                                    //najdi najblizsiu poziciu napravo
-//                                    for (int pom = x; pom < riadok.size(); pom++) {
-////                                        if (riadok.get(i).get());
-//                                    }
-//                                } else if (side == HexagonsSide.LEFT) {
-//
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
+    private void initCustomLocMatrix(int rows, int columns) {
+        String chybneMeno = "chyba";
+        String chybneId = "chyba";
+        for (int i=0; i < rows; i++) {
+            hexagonLayout.add(new ArrayList<>());
+            for (int j=0; j < columns; j++) {
+                if (i==0 && j==0) {
+                    Hexagon init = initHex(new LocationCoordinate2D(16.6113382, 49.1922443), chybneMeno, chybneId);
+                    hexagonLayout.get(i).add(j, init);
+                } else if (i==0) {
+                    Hexagon leftNeighbour = hexagonLayout.get(i).get(j-1);
+                    Hexagon newHex = buildRight(chybneMeno, leftNeighbour.getRightPoint(), chybneId);
+                    hexagonLayout.get(i).add(j, newHex);
+                } else {
+                    Hexagon topNeighbour = hexagonLayout.get(i-1).get(j);
+                    Hexagon newHex = buildBottomRight(chybneMeno, topNeighbour.getBottomRightPoint(), chybneId);
+                    hexagonLayout.get(i).add(j, newHex);
+                }
+            }
+        }
+
+        for (int i = 0; i < rows; i++) {
+            customLocationMatrix.add(new ArrayList<>());
+            for (int j = 0; j < columns; j++) {
+                customLocationMatrix.get(i).add(Optional.empty());
+            }
+        }
     }
 
 
@@ -119,25 +158,6 @@ public class HexagonBuilder {
             }
         }
         return null;
-    }
-
-    private void pridajLeftRight(int i, int j, Location location) {
-        for (String id: location.getNeighboursIds()) {
-            Location pridavana = getNeighbour(id);
-            if (pridavana != null) {
-                double bearing = location.getCenterLocation().bearing(pridavana.getCenterLocation());
-                HexagonsSide side = getBasicHexagonSide(bearing);
-                if (side == HexagonsSide.RIGHT) {
-                    handled.add(pridavana.getId());
-                    Hexagon novy = buildRight(pridavana.getName(), hexagonMatrix.get(i).get(j).get().getRightPoint(), pridavana.getId());
-                    hexagonMatrix.get(i).set(j+1, Optional.of(novy));
-                } else if (side == HexagonsSide.LEFT) {
-                    handled.add(pridavana.getId());
-                    Hexagon novy = buildRight(pridavana.getName(), hexagonMatrix.get(i).get(j).get().getRightPoint(), pridavana.getId());
-                    hexagonMatrix.get(i).set(j-1, Optional.of(novy));
-                }
-            }
-        }
     }
 
     private static int getPoradieI(double vyska, double jedenRiadok, int riadky) {
@@ -177,8 +197,8 @@ public class HexagonBuilder {
         Location mostSouth = findMostSouth(locations);
         Location mostWest = findMostWest(locations);
         Location mostEast = findMostEast(locations);
-        int riadky = 5;
-        int stlpce = 5;
+        int riadky = 3;
+        int stlpce = 2;
         double diffVyska = mostNorth.getCenterLocation().getLatitude() - mostSouth.getCenterLocation().getLatitude();
         double diffSirka = mostEast.getCenterLocation().getLongitude() - mostWest.getCenterLocation().getLongitude();
         System.out.println("diffVyska: " + diffVyska + " diffSirka: " + diffSirka);

@@ -11,6 +11,84 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+class MatrixLayout {
+    private int columns;
+    private int rows;
+
+    public MatrixLayout(int columns, int rows) {
+        this.columns = columns;
+        this.rows = rows;
+    }
+
+    public int getColumns() {
+        return columns;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+}
+
+class CustomPosition {
+    private int column;
+    private int row;
+
+    public CustomPosition(int column, int row) {
+        this.column = column;
+        this.row = row;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public int getRow() {
+        return row;
+    }
+}
+
+class CustomLocation {
+    private String name;
+    private String id;
+    private CustomPosition position;
+
+    public CustomLocation(String name, String id, CustomPosition position) {
+        this.name = name;
+        this.id = id;
+        this.position = position;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public CustomPosition getPosition() {
+        return position;
+    }
+}
+
+class MatrixConf {
+    private MatrixLayout layout;
+    private ArrayList<CustomLocation> locations;
+
+    public MatrixConf(MatrixLayout layout, ArrayList<CustomLocation> locations) {
+        this.layout = layout;
+        this.locations = locations;
+    }
+
+    public MatrixLayout getLayout() {
+        return layout;
+    }
+
+    public ArrayList<CustomLocation> getLocations() {
+        return locations;
+    }
+}
+
 public class JSONReader {
     public ArrayList<RUIANLocation> locations = new ArrayList<>();
 
@@ -28,6 +106,30 @@ public class JSONReader {
         } catch (ParseException | IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public MatrixConf readOwnJson(String filename) {
+        JSONParser jsonParser = new JSONParser();
+        try {
+            FileReader reader = new FileReader(filename);
+            JSONObject object =  (JSONObject) jsonParser.parse(reader);
+            if (object.containsKey("layout")) {
+                JSONObject layout = (JSONObject) object.get("layout");
+                MatrixLayout matrixLayout = new MatrixLayout(Math.toIntExact((long) layout.get("columns")), Math.toIntExact((long) layout.get("rows")));
+                JSONArray elements = (JSONArray) object.get("locations");
+                ArrayList<CustomLocation> locations = new ArrayList<>();
+                for (Object el: elements) {
+                    JSONObject location = (JSONObject) el;
+                    JSONObject position = (JSONObject) ((JSONObject) el).get("position");
+                    CustomPosition customPosition = new CustomPosition(Math.toIntExact((long) position.get("column")), Math.toIntExact((long) position.get("row")));
+                    locations.add(new CustomLocation((String) location.get("name"), (String) location.get("id"), customPosition));
+                }
+                return new MatrixConf(matrixLayout, locations);
+            }
+        } catch (ParseException | IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void read(String fileName) {

@@ -1,19 +1,22 @@
 package com.marketguardians.hexagonbuilder;
 
-import org.json.simple.JSONArray;
-import org.xml.sax.helpers.LocatorImpl;
-
-import java.io.FileWriter;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class App  {
     public static void main(String[] args) {
 //        testGetDataFromJSON();
-        testDataFromHandledJSON();
+//        testDataFromHandledJSON();
 //        testDataFromJSONJHM();
 //        testSusediaDoMatrixu();
+        handleOwnJSON();
+    }
+
+
+    public static void handleOwnJSON() {
+        JSONReader jsonReader = new JSONReader();
+        MatrixConf matrixConf = jsonReader.readOwnJson("republika.json");
+        HexagonBuilder hexagonBuilder = new HexagonBuilder();
+        hexagonBuilder.handleMatrixConf(matrixConf);
     }
 
     public static void testSusediaDoMatrixu() {
@@ -22,7 +25,7 @@ public class App  {
         locations = HexagonBuilder.spracujBezSuseda(locations);
         HexagonBuilder builder = new HexagonBuilder();
         HexagonBuilder.checkniSusedov(locations);
-        builder.susediaDoMatrixu(locations);
+//        builder.susediaDoMatrixu(locations);
     }
 
     public static void testDataFromHandledJSON() {

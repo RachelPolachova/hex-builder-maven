@@ -1,0 +1,120 @@
+{
+  "layout": {
+    "columns":  5,
+    "rows": 4
+  },
+  "locations": [
+    {
+      "name": "Ústecký kraj",
+      "id": "CZ042",
+      "position": {
+        "column": 2,
+        "row": 0
+      }
+    },
+    {
+      "name": "Liberecký kraj",
+      "id": "CZ051",
+      "position": {
+        "column": 3,
+        "row": 0
+      }
+    },
+    {
+      "name": "Karlovarský kraj",
+      "id": "CZ041",
+      "position": {
+        "column": 0,
+        "row": 1
+      }
+    },
+    {
+      "name": "Hlavní město Praha",
+      "id": "CZ010",
+      "position": {
+        "column": 1,
+        "row": 1
+      }
+    },
+    {
+      "name": "Královéhradecký kraj",
+      "id": "CZ052",
+      "position": {
+        "column": 2,
+        "row": 1
+      }
+    },
+    {
+      "name": "Pardubický kraj",
+      "id": "CZ053",
+      "position": {
+        "column": 3,
+        "row": 1
+      }
+    },
+    {
+      "name": "Moravskoslezský kraj",
+      "id": "CZ080",
+      "position": {
+        "column": 4,
+        "row": 1
+      }
+    },
+    {
+      "name": "Plzeňský kraj",
+      "id": "CZ032",
+      "position": {
+        "column": 0,
+        "row": 2
+      }
+    },
+    {
+      "name": "Středočeský kraj",
+      "id": "CZ020",
+      "position": {
+        "column": 1,
+        "row": 2
+      }
+    },
+    {
+      "name": "Kraj Vysočina",
+      "id": "CZ063",
+      "position": {
+        "column": 2,
+        "row": 2
+      }
+    },
+    {
+      "name": "Olomoucký kraj",
+      "id": "CZ071",
+      "position": {
+        "column": 3,
+        "row": 2
+      }
+    },
+    {
+      "name": "Zlínský kraj",
+      "id": "CZ072",
+      "position": {
+        "column": 4,
+        "row": 2
+      }
+    },
+    {
+      "name": "Jihočeský kraj",
+      "id": "CZ031",
+      "position": {
+        "column": 0,
+        "row": 3
+      }
+    },
+    {
+      "name": "Jihomoravský kraj",
+      "id": "CZ064",
+      "position": {
+        "column": 2,
+        "row": 3
+      }
+    }
+  ]
+}
