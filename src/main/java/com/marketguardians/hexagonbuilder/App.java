@@ -13,9 +13,9 @@ import java.util.List;
 
 public class App {
     public static void main(String[] args) {
-//        vsetkoNaraz();
+        vsetkoNaraz();
 //        spracujGeojsonKrajov();
-        spracujGeojsonOrp();
+//        spracujGeojsonOrp();
 //        spracujGeojsonObce();
     }
 
