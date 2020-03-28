@@ -1,0 +1,918 @@
+{
+ "fields": [
+  {
+   "name": "nazev",
+   "type": "esriFieldTypeString",
+   "alias": "Název ORP",
+   "length": 48
+  },
+  {
+   "name": "objectid",
+   "type": "esriFieldTypeOID",
+   "alias": "objectid"
+  }
+ ],
+ "relatedRecordGroups": [
+  {
+   "objectId": 4,
+   "relatedRecords": [
+    {
+     "attributes": {
+      "nazev": "Přeštice",
+      "objectid": 5008
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Stod",
+      "objectid": 5009
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Horažďovice",
+      "objectid": 38
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Klatovy",
+      "objectid": 39
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Sušice",
+      "objectid": 40
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Blovice",
+      "objectid": 42
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Nepomuk",
+      "objectid": 43
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Rokycany",
+      "objectid": 48
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Plzeň",
+      "objectid": 5407
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Domažlice",
+      "objectid": 11007
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Tachov",
+      "objectid": 11009
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Kralovice",
+      "objectid": 11807
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Horšovský Týn",
+      "objectid": 9810
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Nýřany",
+      "objectid": 13808
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Stříbro",
+      "objectid": 13809
+     }
+    }
+   ]
+  },
+  {
+   "objectId": 10,
+   "relatedRecords": [
+    {
+     "attributes": {
+      "nazev": "Humpolec",
+      "objectid": 25
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Pelhřimov",
+      "objectid": 26
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Havlíčkův Brod",
+      "objectid": 64
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Telč",
+      "objectid": 108
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Moravské Budějovice",
+      "objectid": 113
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Náměšť nad Oslavou",
+      "objectid": 114
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Třebíč",
+      "objectid": 115
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Bystřice nad Pernštejnem",
+      "objectid": 120
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Nové Město na Moravě",
+      "objectid": 121
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Žďár nad Sázavou",
+      "objectid": 122
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Chotěboř",
+      "objectid": 129
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Světlá nad Sázavou",
+      "objectid": 161
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Jihlava",
+      "objectid": 164
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Velké Meziříčí",
+      "objectid": 167
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Pacov",
+      "objectid": 168
+     }
+    }
+   ]
+  },
+  {
+   "objectId": 21,
+   "relatedRecords": [
+    {
+     "attributes": {
+      "nazev": "Nový Bor",
+      "objectid": 51
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Železný Brod",
+      "objectid": 55
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Liberec",
+      "objectid": 56
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Semily",
+      "objectid": 80
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Jablonec nad Nisou",
+      "objectid": 172
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Frýdlant",
+      "objectid": 180
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Česká Lípa",
+      "objectid": 192
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Tanvald",
+      "objectid": 200
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Turnov",
+      "objectid": 218
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Jilemnice",
+      "objectid": 231
+     }
+    }
+   ]
+  },
+  {
+   "objectId": 415,
+   "relatedRecords": [
+    {
+     "attributes": {
+      "nazev": "Brno",
+      "objectid": 5409
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Kuřim",
+      "objectid": 5410
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Rosice",
+      "objectid": 95
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Židlochovice",
+      "objectid": 98
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Hustopeče",
+      "objectid": 99
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Mikulov",
+      "objectid": 100
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Pohořelice",
+      "objectid": 101
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Veselí nad Moravou",
+      "objectid": 107
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Slavkov u Brna",
+      "objectid": 116
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Vyškov",
+      "objectid": 117
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Znojmo",
+      "objectid": 119
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Břeclav",
+      "objectid": 178
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Moravský Krumlov",
+      "objectid": 8607
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Ivančice",
+      "objectid": 8608
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Bučovice",
+      "objectid": 201
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Hodonín",
+      "objectid": 608
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Kyjov",
+      "objectid": 609
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Blansko",
+      "objectid": 1009
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Šlapanice",
+      "objectid": 1409
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Boskovice",
+      "objectid": 3007
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Tišnov",
+      "objectid": 3008
+     }
+    }
+   ]
+  },
+  {
+   "objectId": 817,
+   "relatedRecords": [
+    {
+     "attributes": {
+      "nazev": "Chrudim",
+      "objectid": 4609
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Vysoké Mýto",
+      "objectid": 4611
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Holice",
+      "objectid": 75
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Litomyšl",
+      "objectid": 81
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Moravská Třebová",
+      "objectid": 82
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Králíky",
+      "objectid": 86
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Lanškroun",
+      "objectid": 87
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Žamberk",
+      "objectid": 88
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Česká Třebová",
+      "objectid": 89
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Ústí nad Orlicí",
+      "objectid": 90
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Pardubice",
+      "objectid": 194
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Polička",
+      "objectid": 195
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Svitavy",
+      "objectid": 204
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Hlinsko",
+      "objectid": 212
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Přelouč",
+      "objectid": 2609
+     }
+    }
+   ]
+  },
+  {
+   "objectId": 2015,
+   "relatedRecords": [
+    {
+     "attributes": {
+      "nazev": "Aš",
+      "objectid": 34
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Cheb",
+      "objectid": 35
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Mariánské Lázně",
+      "objectid": 36
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Sokolov",
+      "objectid": 49
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Karlovy Vary",
+      "objectid": 11407
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Ostrov",
+      "objectid": 11408
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Kraslice",
+      "objectid": 187
+     }
+    }
+   ]
+  },
+  {
+   "objectId": 2016,
+   "relatedRecords": [
+    {
+     "attributes": {
+      "nazev": "Kadaň",
+      "objectid": 4610
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Chomutov",
+      "objectid": 4612
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Děčín",
+      "objectid": 52
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Rumburk",
+      "objectid": 53
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Varnsdorf",
+      "objectid": 54
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Litoměřice",
+      "objectid": 57
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Lovosice",
+      "objectid": 58
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Bílina",
+      "objectid": 61
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Teplice",
+      "objectid": 62
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Ústí nad Labem",
+      "objectid": 63
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Podbořany",
+      "objectid": 5808
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Most",
+      "objectid": 6612
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Louny",
+      "objectid": 6614
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Litvínov",
+      "objectid": 203
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Žatec",
+      "objectid": 2208
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Roudnice nad Labem",
+      "objectid": 2608
+     }
+    }
+   ]
+  },
+  {
+   "objectId": 3216,
+   "relatedRecords": [
+    {
+     "attributes": {
+      "nazev": "Hradec Králové",
+      "objectid": 65
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Vrchlabí",
+      "objectid": 6209
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Hořice",
+      "objectid": 69
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Broumov",
+      "objectid": 72
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Nové Město nad Metují",
+      "objectid": 73
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Náchod",
+      "objectid": 74
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Jičín",
+      "objectid": 10608
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Kostelec nad Orlicí",
+      "objectid": 11008
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Rychnov nad Kněžnou",
+      "objectid": 11010
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Dvůr Králové nad Labem",
+      "objectid": 11809
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Trutnov",
+      "objectid": 11810
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Dobruška",
+      "objectid": 7407
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Nový Bydžov",
+      "objectid": 210
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Nová Paka",
+      "objectid": 230
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Jaroměř",
+      "objectid": 4210
+     }
+    }
+   ]
+  },
+  {
+   "objectId": 3615,
+   "relatedRecords": [
+    {
+     "attributes": {
+      "nazev": "Hlavní město Praha",
+      "objectid": 12207
+     }
+    }
+   ]
+  },
+  {
+   "objectId": 4015,
+   "relatedRecords": [
+    {
+     "attributes": {
+      "nazev": "Konice",
+      "objectid": 112
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Litovel",
+      "objectid": 142
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Olomouc",
+      "objectid": 143
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Uničov",
+      "objectid": 144
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Šternberk",
+      "objectid": 145
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Hranice",
+      "objectid": 151
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Mohelnice",
+      "objectid": 154
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Zábřeh",
+      "objectid": 155
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Šumperk",
+      "objectid": 156
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Jeseník",
+      "objectid": 160
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Přerov",
+      "objectid": 12608
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Prostějov",
+      "objectid": 1010
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Lipník nad Bečvou",
+      "objectid": 2613
+     }
+    }
+   ]
+  },
+  {
+   "objectId": 4016,
+   "relatedRecords": [
+    {
+     "attributes": {
+      "nazev": "Luhačovice",
+      "objectid": 102
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Vizovice",
+      "objectid": 104
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Bystřice pod Hostýnem",
+      "objectid": 109
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Holešov",
+      "objectid": 110
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Rožnov pod Radhoštěm",
+      "objectid": 157
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Valašské Meziříčí",
+      "objectid": 158
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Vsetín",
+      "objectid": 159
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Valašské Klobouky",
+      "objectid": 163
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Uherský Brod",
+      "objectid": 183
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Zlín",
+      "objectid": 215
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Otrokovice",
+      "objectid": 14607
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Kroměříž",
+      "objectid": 14608
+     }
+    },
+    {
+     "attributes": {
+      "nazev": "Uherské Hradiště",
+      "objectid": 1808
+     }
+    }
+   ]
+  }
+ ]
+}

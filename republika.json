@@ -6,7 +6,7 @@
   "locations": [
     {
       "name": "Ústecký kraj",
-      "id": "CZ042",
+      "id": 2016,
       "position": {
         "column": 2,
         "row": 0
@@ -14,7 +14,7 @@
     },
     {
       "name": "Liberecký kraj",
-      "id": "CZ051",
+      "id": 21,
       "position": {
         "column": 3,
         "row": 0
@@ -22,7 +22,7 @@
     },
     {
       "name": "Karlovarský kraj",
-      "id": "CZ041",
+      "id": 2015,
       "position": {
         "column": 0,
         "row": 1
@@ -30,7 +30,7 @@
     },
     {
       "name": "Hlavní město Praha",
-      "id": "CZ010",
+      "id": 2815,
       "position": {
         "column": 1,
         "row": 1
@@ -38,7 +38,7 @@
     },
     {
       "name": "Královéhradecký kraj",
-      "id": "CZ052",
+      "id": 3216,
       "position": {
         "column": 2,
         "row": 1
@@ -46,7 +46,7 @@
     },
     {
       "name": "Pardubický kraj",
-      "id": "CZ053",
+      "id": 817,
       "position": {
         "column": 3,
         "row": 1
@@ -54,7 +54,7 @@
     },
     {
       "name": "Moravskoslezský kraj",
-      "id": "CZ080",
+      "id": 13,
       "position": {
         "column": 4,
         "row": 1
@@ -62,7 +62,7 @@
     },
     {
       "name": "Plzeňský kraj",
-      "id": "CZ032",
+      "id": 4,
       "position": {
         "column": 0,
         "row": 2
@@ -70,7 +70,7 @@
     },
     {
       "name": "Středočeský kraj",
-      "id": "CZ020",
+      "id": 3215,
       "position": {
         "column": 1,
         "row": 2
@@ -78,7 +78,7 @@
     },
     {
       "name": "Kraj Vysočina",
-      "id": "CZ063",
+      "id": 10,
       "position": {
         "column": 2,
         "row": 2
@@ -86,7 +86,7 @@
     },
     {
       "name": "Olomoucký kraj",
-      "id": "CZ071",
+      "id": 416,
       "position": {
         "column": 3,
         "row": 2
@@ -94,7 +94,7 @@
     },
     {
       "name": "Zlínský kraj",
-      "id": "CZ072",
+      "id": 21,
       "position": {
         "column": 4,
         "row": 2
@@ -102,7 +102,7 @@
     },
     {
       "name": "Jihočeský kraj",
-      "id": "CZ031",
+      "id": 3,
       "position": {
         "column": 0,
         "row": 3
@@ -110,7 +110,7 @@
     },
     {
       "name": "Jihomoravský kraj",
-      "id": "CZ064",
+      "id": 415,
       "position": {
         "column": 2,
         "row": 3

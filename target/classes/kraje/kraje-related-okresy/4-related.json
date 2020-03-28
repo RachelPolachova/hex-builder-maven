@@ -1,0 +1,89 @@
+{
+ "fields": [
+  {
+   "name": "objectid",
+   "type": "esriFieldTypeOID",
+   "alias": "objectid"
+  },
+  {
+   "name": "nazev",
+   "type": "esriFieldTypeString",
+   "alias": "Název okresu",
+   "length": 48
+  },
+  {
+   "name": "vusc",
+   "type": "esriFieldTypeSmallInteger",
+   "alias": "Nadřazený VÚSC"
+  },
+  {
+   "name": "nutslau",
+   "type": "esriFieldTypeString",
+   "alias": "Kód územního celku v NUTS/LAU",
+   "length": 6
+  }
+ ],
+ "relatedRecordGroups": [
+  {
+   "objectId": 4,
+   "relatedRecords": [
+    {
+     "attributes": {
+      "objectid": 4878,
+      "nazev": "Plzeň-město",
+      "vusc": 43,
+      "nutslau": "CZ0323"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 4879,
+      "nazev": "Plzeň-sever",
+      "vusc": 43,
+      "nutslau": "CZ0325"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 25,
+      "nazev": "Klatovy",
+      "vusc": 43,
+      "nutslau": "CZ0322"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 27,
+      "nazev": "Plzeň-jih",
+      "vusc": 43,
+      "nutslau": "CZ0324"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 29,
+      "nazev": "Rokycany",
+      "vusc": 43,
+      "nutslau": "CZ0326"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 9278,
+      "nazev": "Domažlice",
+      "vusc": 43,
+      "nutslau": "CZ0321"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 9279,
+      "nazev": "Tachov",
+      "vusc": 43,
+      "nutslau": "CZ0327"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,147 @@
+{
+ "displayFieldName": "nazev",
+ "fieldAliases": {
+  "objectid": "objectid",
+  "nazev": "Název VÚSC",
+  "kod": "Kód VÚSC",
+  "nutslau": "Kód územního celku v NUTS/LAU"
+ },
+ "fields": [
+  {
+   "name": "objectid",
+   "type": "esriFieldTypeOID",
+   "alias": "objectid"
+  },
+  {
+   "name": "nazev",
+   "type": "esriFieldTypeString",
+   "alias": "Název VÚSC",
+   "length": 48
+  },
+  {
+   "name": "kod",
+   "type": "esriFieldTypeInteger",
+   "alias": "Kód VÚSC"
+  },
+  {
+   "name": "nutslau",
+   "type": "esriFieldTypeString",
+   "alias": "Kód územního celku v NUTS/LAU",
+   "length": 6
+  }
+ ],
+ "features": [
+  {
+   "attributes": {
+    "objectid": 2015,
+    "nazev": "Karlovarský kraj",
+    "kod": 51,
+    "nutslau": "CZ041"
+   }
+  },
+  {
+   "attributes": {
+    "objectid": 2016,
+    "nazev": "Ústecký kraj",
+    "kod": 60,
+    "nutslau": "CZ042"
+   }
+  },
+  {
+   "attributes": {
+    "objectid": 3,
+    "nazev": "Jihočeský kraj",
+    "kod": 35,
+    "nutslau": "CZ031"
+   }
+  },
+  {
+   "attributes": {
+    "objectid": 4,
+    "nazev": "Plzeňský kraj",
+    "kod": 43,
+    "nutslau": "CZ032"
+   }
+  },
+  {
+   "attributes": {
+    "objectid": 2815,
+    "nazev": "Hlavní město Praha",
+    "kod": 19,
+    "nutslau": "CZ010"
+   }
+  },
+  {
+   "attributes": {
+    "objectid": 10,
+    "nazev": "Kraj Vysočina",
+    "kod": 108,
+    "nutslau": "CZ063"
+   }
+  },
+  {
+   "attributes": {
+    "objectid": 3215,
+    "nazev": "Středočeský kraj",
+    "kod": 27,
+    "nutslau": "CZ020"
+   }
+  },
+  {
+   "attributes": {
+    "objectid": 3216,
+    "nazev": "Královéhradecký kraj",
+    "kod": 86,
+    "nutslau": "CZ052"
+   }
+  },
+  {
+   "attributes": {
+    "objectid": 13,
+    "nazev": "Moravskoslezský kraj",
+    "kod": 132,
+    "nutslau": "CZ080"
+   }
+  },
+  {
+   "attributes": {
+    "objectid": 14,
+    "nazev": "Zlínský kraj",
+    "kod": 141,
+    "nutslau": "CZ072"
+   }
+  },
+  {
+   "attributes": {
+    "objectid": 21,
+    "nazev": "Liberecký kraj",
+    "kod": 78,
+    "nutslau": "CZ051"
+   }
+  },
+  {
+   "attributes": {
+    "objectid": 415,
+    "nazev": "Jihomoravský kraj",
+    "kod": 116,
+    "nutslau": "CZ064"
+   }
+  },
+  {
+   "attributes": {
+    "objectid": 416,
+    "nazev": "Olomoucký kraj",
+    "kod": 124,
+    "nutslau": "CZ071"
+   }
+  },
+  {
+   "attributes": {
+    "objectid": 817,
+    "nazev": "Pardubický kraj",
+    "kod": 94,
+    "nutslau": "CZ053"
+   }
+  }
+ ]
+}

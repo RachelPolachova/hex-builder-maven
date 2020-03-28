@@ -1,0 +1,178 @@
+{
+ "fields": [
+  {
+   "name": "objectid",
+   "type": "esriFieldTypeOID",
+   "alias": "objectid"
+  },
+  {
+   "name": "nazev",
+   "type": "esriFieldTypeString",
+   "alias": "Název ORP",
+   "length": 48
+  }
+ ],
+ "relatedRecordGroups": [
+  {
+   "objectId": 3215,
+   "relatedRecords": [
+    {
+     "attributes": {
+      "objectid": 2,
+      "nazev": "Vlašim"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 5,
+      "nazev": "Kladno"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 6,
+      "nazev": "Slaný"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 7,
+      "nazev": "Český Brod"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 10,
+      "nazev": "Kralupy nad Vltavou"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 13,
+      "nazev": "Lysá nad Labem"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 16,
+      "nazev": "Příbram"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 6210,
+      "nazev": "Brandýs nad Labem-Stará Boleslav"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 10207,
+      "nazev": "Mělník"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 10210,
+      "nazev": "Neratovice"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 10607,
+      "nazev": "Mladá Boleslav"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 10611,
+      "nazev": "Mnichovo Hradiště"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 6607,
+      "nazev": "Beroun"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 6608,
+      "nazev": "Hořovice"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 6613,
+      "nazev": "Dobříš"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 175,
+      "nazev": "Nymburk"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 7808,
+      "nazev": "Černošice"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 184,
+      "nazev": "Votice"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 8207,
+      "nazev": "Kutná Hora"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 8208,
+      "nazev": "Čáslav"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 193,
+      "nazev": "Říčany"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 196,
+      "nazev": "Rakovník"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 209,
+      "nazev": "Poděbrady"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 1407,
+      "nazev": "Sedlčany"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 1410,
+      "nazev": "Benešov"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 2616,
+      "nazev": "Kolín"
+     }
+    }
+   ]
+  }
+ ]
+}

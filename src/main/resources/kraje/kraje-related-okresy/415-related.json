@@ -1,0 +1,89 @@
+{
+ "fields": [
+  {
+   "name": "objectid",
+   "type": "esriFieldTypeOID",
+   "alias": "objectid"
+  },
+  {
+   "name": "nazev",
+   "type": "esriFieldTypeString",
+   "alias": "Název okresu",
+   "length": 48
+  },
+  {
+   "name": "vusc",
+   "type": "esriFieldTypeSmallInteger",
+   "alias": "Nadřazený VÚSC"
+  },
+  {
+   "name": "nutslau",
+   "type": "esriFieldTypeString",
+   "alias": "Kód územního celku v NUTS/LAU",
+   "length": 6
+  }
+ ],
+ "relatedRecordGroups": [
+  {
+   "objectId": 415,
+   "relatedRecords": [
+    {
+     "attributes": {
+      "objectid": 4880,
+      "nazev": "Brno-město",
+      "vusc": 116,
+      "nutslau": "CZ0642"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 56,
+      "nazev": "Břeclav",
+      "vusc": 116,
+      "nutslau": "CZ0644"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 58,
+      "nazev": "Hodonín",
+      "vusc": 116,
+      "nutslau": "CZ0645"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 7278,
+      "nazev": "Brno-venkov",
+      "vusc": 116,
+      "nutslau": "CZ0643"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 64,
+      "nazev": "Vyškov",
+      "vusc": 116,
+      "nutslau": "CZ0646"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 7279,
+      "nazev": "Znojmo",
+      "vusc": 116,
+      "nutslau": "CZ0647"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 2478,
+      "nazev": "Blansko",
+      "vusc": 116,
+      "nutslau": "CZ0641"
+     }
+    }
+   ]
+  }
+ ]
+}

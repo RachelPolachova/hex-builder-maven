@@ -1,15 +1,15 @@
 package com.marketguardians.hexagonbuilder.model;
 
 public class Region {
-    private String id;
+    private long id;
     private String name;
 
-    public Region(String id, String name) {
+    public Region(long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 

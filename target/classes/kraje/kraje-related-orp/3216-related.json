@@ -1,0 +1,112 @@
+{
+ "fields": [
+  {
+   "name": "objectid",
+   "type": "esriFieldTypeOID",
+   "alias": "objectid"
+  },
+  {
+   "name": "nazev",
+   "type": "esriFieldTypeString",
+   "alias": "Název ORP",
+   "length": 48
+  }
+ ],
+ "relatedRecordGroups": [
+  {
+   "objectId": 3216,
+   "relatedRecords": [
+    {
+     "attributes": {
+      "objectid": 65,
+      "nazev": "Hradec Králové"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 6208,
+      "nazev": "Trutnov"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 6209,
+      "nazev": "Vrchlabí"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 69,
+      "nazev": "Hořice"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 72,
+      "nazev": "Broumov"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 73,
+      "nazev": "Nové Město nad Metují"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 74,
+      "nazev": "Náchod"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 10608,
+      "nazev": "Jičín"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 11008,
+      "nazev": "Kostelec nad Orlicí"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 11010,
+      "nazev": "Rychnov nad Kněžnou"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 7407,
+      "nazev": "Dobruška"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 210,
+      "nazev": "Nový Bydžov"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 230,
+      "nazev": "Nová Paka"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 4209,
+      "nazev": "Dvůr Králové nad Labem"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 4210,
+      "nazev": "Jaroměř"
+     }
+    }
+   ]
+  }
+ ]
+}

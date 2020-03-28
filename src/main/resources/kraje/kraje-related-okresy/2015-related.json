@@ -1,0 +1,57 @@
+{
+ "fields": [
+  {
+   "name": "objectid",
+   "type": "esriFieldTypeOID",
+   "alias": "objectid"
+  },
+  {
+   "name": "nazev",
+   "type": "esriFieldTypeString",
+   "alias": "Název okresu",
+   "length": 48
+  },
+  {
+   "name": "vusc",
+   "type": "esriFieldTypeSmallInteger",
+   "alias": "Nadřazený VÚSC"
+  },
+  {
+   "name": "nutslau",
+   "type": "esriFieldTypeString",
+   "alias": "Kód územního celku v NUTS/LAU",
+   "length": 6
+  }
+ ],
+ "relatedRecordGroups": [
+  {
+   "objectId": 2015,
+   "relatedRecords": [
+    {
+     "attributes": {
+      "objectid": 5278,
+      "nazev": "Karlovy Vary",
+      "vusc": 51,
+      "nutslau": "CZ0412"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 23,
+      "nazev": "Cheb",
+      "vusc": 51,
+      "nutslau": "CZ0411"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 30,
+      "nazev": "Sokolov",
+      "vusc": 51,
+      "nutslau": "CZ0413"
+     }
+    }
+   ]
+  }
+ ]
+}

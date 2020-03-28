@@ -1,0 +1,86 @@
+[
+  {
+    "path": "010000000",
+    "code": 35,
+    "name": "Jihočeský kraj",
+    "id": 3
+  },
+  {
+    "path": "020000000",
+    "code": 43,
+    "name": "Plzeňský kraj",
+    "id": 4
+  },
+  {
+    "path": "030000000",
+    "code": 108,
+    "name": "Kraj Vysočina",
+    "id": 10
+  },
+  {
+    "path": "040000000",
+    "code": 132,
+    "name": "Moravskoslezský kraj",
+    "id": 13
+  },
+  {
+    "path": "050000000",
+    "code": 141,
+    "name": "Zlínský kraj",
+    "id": 14
+  },
+  {
+    "path": "060000000",
+    "code": 78,
+    "name": "Liberecký kraj",
+    "id": 21
+  },
+  {
+    "path": "070000000",
+    "code": 116,
+    "name": "Jihomoravský kraj",
+    "id": 415
+  },
+  {
+    "path": "080000000",
+    "code": 124,
+    "name": "Olomoucký kraj",
+    "id": 416
+  },
+  {
+    "path": "090000000",
+    "code": 94,
+    "name": "Pardubický kraj",
+    "id": 817
+  },
+  {
+    "path": "100000000",
+    "code": 51,
+    "name": "Karlovarský kraj",
+    "id": 2015
+  },
+  {
+    "path": "110000000",
+    "code": 60,
+    "name": "Ústecký kraj",
+    "id": 2016
+  },
+  {
+    "path": "120000000",
+    "code": 19,
+    "name": "Hlavní město Praha",
+    "id": 2815
+  },
+  {
+    "path": "130000000",
+    "code": 27,
+    "name": "Středočeský kraj",
+    "id": 3215
+  },
+  {
+    "path": "140000000",
+    "code": 86,
+    "name": "Královéhradecký kraj",
+    "id": 3216
+  }
+]

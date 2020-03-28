@@ -1,0 +1,100 @@
+{
+ "fields": [
+  {
+   "name": "objectid",
+   "type": "esriFieldTypeOID",
+   "alias": "objectid"
+  },
+  {
+   "name": "nazev",
+   "type": "esriFieldTypeString",
+   "alias": "Název ORP",
+   "length": 48
+  }
+ ],
+ "relatedRecordGroups": [
+  {
+   "objectId": 416,
+   "relatedRecords": [
+    {
+     "attributes": {
+      "objectid": 112,
+      "nazev": "Konice"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 142,
+      "nazev": "Litovel"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 143,
+      "nazev": "Olomouc"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 144,
+      "nazev": "Uničov"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 145,
+      "nazev": "Šternberk"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 151,
+      "nazev": "Hranice"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 154,
+      "nazev": "Mohelnice"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 155,
+      "nazev": "Zábřeh"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 156,
+      "nazev": "Šumperk"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 160,
+      "nazev": "Jeseník"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 1010,
+      "nazev": "Prostějov"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 2613,
+      "nazev": "Lipník nad Bečvou"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 2614,
+      "nazev": "Přerov"
+     }
+    }
+   ]
+  }
+ ]
+}

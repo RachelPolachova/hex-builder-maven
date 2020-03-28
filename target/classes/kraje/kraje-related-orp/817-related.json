@@ -1,0 +1,112 @@
+{
+ "fields": [
+  {
+   "name": "objectid",
+   "type": "esriFieldTypeOID",
+   "alias": "objectid"
+  },
+  {
+   "name": "nazev",
+   "type": "esriFieldTypeString",
+   "alias": "Název ORP",
+   "length": 48
+  }
+ ],
+ "relatedRecordGroups": [
+  {
+   "objectId": 817,
+   "relatedRecords": [
+    {
+     "attributes": {
+      "objectid": 4609,
+      "nazev": "Chrudim"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 4611,
+      "nazev": "Vysoké Mýto"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 75,
+      "nazev": "Holice"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 81,
+      "nazev": "Litomyšl"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 82,
+      "nazev": "Moravská Třebová"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 86,
+      "nazev": "Králíky"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 87,
+      "nazev": "Lanškroun"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 88,
+      "nazev": "Žamberk"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 89,
+      "nazev": "Česká Třebová"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 90,
+      "nazev": "Ústí nad Orlicí"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 194,
+      "nazev": "Pardubice"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 195,
+      "nazev": "Polička"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 204,
+      "nazev": "Svitavy"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 212,
+      "nazev": "Hlinsko"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 2609,
+      "nazev": "Přelouč"
+     }
+    }
+   ]
+  }
+ ]
+}

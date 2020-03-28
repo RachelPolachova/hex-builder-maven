@@ -1,0 +1,73 @@
+{
+ "fields": [
+  {
+   "name": "objectid",
+   "type": "esriFieldTypeOID",
+   "alias": "objectid"
+  },
+  {
+   "name": "nazev",
+   "type": "esriFieldTypeString",
+   "alias": "Název okresu",
+   "length": 48
+  },
+  {
+   "name": "vusc",
+   "type": "esriFieldTypeSmallInteger",
+   "alias": "Nadřazený VÚSC"
+  },
+  {
+   "name": "nutslau",
+   "type": "esriFieldTypeString",
+   "alias": "Kód územního celku v NUTS/LAU",
+   "length": 6
+  }
+ ],
+ "relatedRecordGroups": [
+  {
+   "objectId": 10,
+   "relatedRecords": [
+    {
+     "attributes": {
+      "objectid": 17,
+      "nazev": "Pelhřimov",
+      "vusc": 108,
+      "nutslau": "CZ0633"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 42,
+      "nazev": "Havlíčkův Brod",
+      "vusc": 108,
+      "nutslau": "CZ0631"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 59,
+      "nazev": "Jihlava",
+      "vusc": 108,
+      "nutslau": "CZ0632"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 62,
+      "nazev": "Třebíč",
+      "vusc": 108,
+      "nutslau": "CZ0634"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 66,
+      "nazev": "Žďár nad Sázavou",
+      "vusc": 108,
+      "nutslau": "CZ0635"
+     }
+    }
+   ]
+  }
+ ]
+}
