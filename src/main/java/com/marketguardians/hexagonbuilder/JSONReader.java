@@ -104,6 +104,13 @@ public class JSONReader {
             object.put("hexagons", hexagons);
             array.add(object);
         });
+        try {
+            FileWriter writer = new FileWriter(name);
+            writer.write(array.toJSONString());
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private String findPath(String id, String pathIdFileName) {

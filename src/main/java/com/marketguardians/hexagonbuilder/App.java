@@ -13,15 +13,16 @@ import java.util.List;
 
 public class App {
     public static void main(String[] args) {
-        vsetkoNaraz();
+//        vsetkoNaraz();
 //        spracujGeojsonKrajov();
 //        spracujGeojsonOrp();
-//        spracujGeojsonObce();
+        spracujGeojsonObce();
     }
 
     public static void vsetkoNaraz() {
         JSONReader reader = new JSONReader();
-        reader.fetchAllRegionsAndTheirRelations(2L);
+//        reader.fetchAllRegionsAndTheirRelations(2L);
+        reader.zacatOdOrp();
     }
 
     public static void spracujGeojsonKrajov() {
