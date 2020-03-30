@@ -39,7 +39,7 @@ public class App {
         HexagonBuilder hexagonBuilder = new HexagonBuilder();
         ArrayList<LocationPolygon> polygons = reader.spracujViaceroGeojsonSuborov(10, 200, "orp");
         System.out.println("Size: " + polygons.size());
-        HashMap<String, ArrayList<Hexagon>> hexagons = hexagonBuilder.gpsPointsInPolygon(10, 11, polygons);
+        HashMap<String, ArrayList<Hexagon>> hexagons = hexagonBuilder.gpsPointsInPolygon(5, 5, polygons);
         reader.hexIntoJsonArray(hexagons, "db-orp.json", "orp-paths.json");
     }
 
@@ -48,8 +48,9 @@ public class App {
         HexagonBuilder hexagonBuilder = new HexagonBuilder();
         ArrayList<LocationPolygon> polygons = reader.spracujViaceroGeojsonSuborov(10, 6250, "obec");
         System.out.println("Size: " + polygons.size());
-        HashMap<String, ArrayList<Hexagon>> hexagons = hexagonBuilder.gpsPointsInPolygon(5, 11, polygons);
-        reader.hexIntoJsonArray(hexagons, "db-obec.json", "obec-paths.json");
+        HashMap<String, ArrayList<Hexagon>> hexagons = hexagonBuilder.gpsPointsInPolygon(1, 1, polygons);
+        System.out.println("---- calling into json aray: ");
+        reader.hexIntoJsonArray(hexagons, "db-obec-1km.json", "obec-paths.json");
     }
 
     public static void okresyJsonDostanId() {

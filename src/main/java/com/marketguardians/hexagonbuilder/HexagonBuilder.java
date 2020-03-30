@@ -72,6 +72,7 @@ public class HexagonBuilder {
 
         for (int i=0; i < pointsMatrix.size(); i++) {
             for (int j=0; j < pointsMatrix.get(i).size(); j++) {
+                System.out.println("I: " + i + " /" + pointsMatrix.size() + " J: " + j + " /" + pointsMatrix.get(i).size());
                 LocationCoordinate2D point = pointsMatrix.get(i).get(j);
                 for (LocationPolygon polygon : polygons) {
                     if (GFGPointCheck.isInside(polygon.getPoints(), polygon.getPoints().size(), point)) {
