@@ -1,8 +1,10 @@
 package com.marketguardians.hexagonbuilder.model;
 
-public class LocationCoordinate2D {
-    private double longitude;
-    private double latitude;
+import java.util.Objects;
+
+public class LocationCoordinate2D implements Comparable<LocationCoordinate2D> {
+    private Double longitude; // zemepisná dĺžka
+    private Double latitude; // zemepisná šírka
 
     public LocationCoordinate2D(double longitude, double latitude) {
         this.longitude = longitude;
@@ -10,44 +12,24 @@ public class LocationCoordinate2D {
     }
 
     public double distance(LocationCoordinate2D that) {
-        final int R = 6371;
-        double latDistance = Math.toRadians(latitude - that.latitude);
-        double lngDistance = Math.toRadians(longitude - that.longitude);
+        final int R = 6371; // polomer Zeme v kilometroch
+        double deltaLat = Math.toRadians(latitude - that.latitude);
+        double deltaLong = Math.toRadians(longitude - that.longitude);
 
-        double a = (Math.sin(latDistance / 2) * Math.sin(latDistance / 2)) +
+        // Haversine metóda
+        double a = (Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2)) +
                 (Math.cos(Math.toRadians(latitude))) *
                         (Math.cos(Math.toRadians(that.latitude))) *
-                        (Math.sin(lngDistance / 2)) *
-                        (Math.sin(lngDistance / 2));
+                        (Math.sin(deltaLong / 2)) *
+                        (Math.sin(deltaLong / 2));
 
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return R * c;
     }
 
-    public double bearing(LocationCoordinate2D that) {
-        double long1 = Math.toRadians(longitude);
-        double long2 = Math.toRadians(that.longitude);
-        double lat1 = Math.toRadians(latitude);
-        double lat2 = Math.toRadians(that.latitude);
-        double dLon = (long2 - long1);
-
-        double degree = Math.toDegrees(Math.atan2(Math.sin(dLon) * Math.cos(lat2),
-                Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon)));
-//        double y = Math.sin(long2 - long1) * Math.cos(lat2);
-//        double x = Math.cos(lat1) * Math.sin(lat2);
-//        double brng = Math.atan2(y, x);
-//        return Math.toDegrees(brng);
-        if (degree >= 0) {
-            return degree;
-        } else {
-            return 360 + degree;
-        }
-//        return degree;
-    }
-
-    public LocationCoordinate2D newLoc(double bear, double distance) {
-        double brng = Math.toRadians(bear);
-        final int R = 6371;
+    public LocationCoordinate2D getNewLocation(double bearing, double distance) {
+        double brng = Math.toRadians(bearing); // smer v radiánoch
+        final int R = 6371; // polomer Zeme v kilometroch
         double lat1 = Math.toRadians(latitude);
         double lon1 = Math.toRadians(longitude);
         double lat2 = Math.asin(Math.sin(lat1) * Math.cos(distance/R) + Math.cos(lat1) * Math.sin(distance/R) * Math.cos(brng));
@@ -55,8 +37,6 @@ public class LocationCoordinate2D {
 
         return new LocationCoordinate2D(Math.toDegrees(lon2), Math.toDegrees(lat2));
     }
-
-
 
     public double getLongitude() {
         return longitude;
@@ -76,5 +56,27 @@ public class LocationCoordinate2D {
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+
+    @Override
+    public int compareTo(LocationCoordinate2D other) {
+        if (longitude != other.getLongitude()) {
+            return Double.compare(longitude, other.longitude);
+        } else {
+            return Double.compare(latitude, other.latitude);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(longitude, latitude);
+    }
+
+    public Double getX() {
+        return longitude;
+    }
+
+    public Double getY() {
+        return latitude;
     }
 }

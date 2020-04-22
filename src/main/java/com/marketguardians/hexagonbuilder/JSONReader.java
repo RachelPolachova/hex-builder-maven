@@ -9,9 +9,7 @@ import org.json.simple.parser.ParseException;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
@@ -82,26 +80,18 @@ public class JSONReader {
         return array;
     }
 
-    public void hexIntoJsonArray(HashMap<String, ArrayList<Hexagon>> hashMap, String name, String pathIdFileName) {
+    public void regionWithCenterIntoArray(ArrayList<Region> regions, String name, String pathIdFileName) {
         JSONArray array = new JSONArray();
-        hashMap.forEach((key, value) -> {
-            String path = findPath(key, pathIdFileName);
+        regions.forEach(reg -> {
+            String path = findPath(reg.getId(), pathIdFileName);
             JSONObject object = new JSONObject();
-            object.put("objectId", key);
+            object.put("objectId", reg.getId());
             object.put("path", path);
-            object.put("name", value.get(0).getName());
-            JSONArray hexagons = new JSONArray();
-            value.forEach(h -> { //for each hexagon
-                JSONArray hex = new JSONArray();
-                h.getPoints().forEach(point -> { //for each point
-                    JSONObject coords = new JSONObject();
-                    coords.put("lat", point.getLatitude());
-                    coords.put("lon", point.getLongitude());
-                    hex.add(coords);
-                });
-                hexagons.add(hex);
-            });
-            object.put("hexagons", hexagons);
+            object.put("name", reg.getName());
+            JSONObject center = new JSONObject();
+            center.put("lat", reg.getCenter().getLatitude());
+            center.put("lon", reg.getCenter().getLongitude());
+            object.put("center", center);
             array.add(object);
         });
         try {
@@ -113,7 +103,60 @@ public class JSONReader {
         }
     }
 
-    private String findPath(String id, String pathIdFileName) {
+    public void hexIntoJsonArray(ArrayList<RegionToJson> regions, String name, String pathIdFileName) {
+        JSONArray array = new JSONArray();
+        regions.forEach(reg -> {
+            String path = findPath(reg.getKey(), pathIdFileName);
+            JSONObject object = new JSONObject();
+            object.put("objectId", reg.getKey());
+            object.put("path", path);
+            object.put("name", reg.getHexagons().get(0).getName());
+            JSONArray hexagons = new JSONArray();
+            reg.getHexagons().forEach(h -> { //for each hexagon
+                JSONArray hex = new JSONArray();
+                h.getPoints().forEach(point -> { //for each point
+                    JSONObject coords = new JSONObject();
+                    coords.put("lat", point.getLatitude());
+                    coords.put("lon", point.getLongitude());
+                    hex.add(coords);
+                });
+                hexagons.add(hex);
+            });
+            JSONArray holes = new JSONArray();
+            reg.getHoles().forEach(h -> {
+                JSONArray hex = new JSONArray();
+                h.forEach(point -> { //for each point
+                    JSONObject coords = new JSONObject();
+                    coords.put("lat", point.getLatitude());
+                    coords.put("lon", point.getLongitude());
+                    hex.add(coords);
+                });
+                holes.add(hex);
+            });
+            JSONArray border = new JSONArray();
+            reg.getBorder().forEach(point -> {
+                JSONObject coords = new JSONObject();
+                coords.put("lat", point.getLatitude());
+                coords.put("lon", point.getLongitude());
+                border.add(coords);
+            });
+            object.put("hexagons", hexagons);
+            object.put("border", border);
+            if (holes.size() > 0) {
+                object.put("holes", holes);
+            }
+            array.add(object);
+        });
+        try {
+            FileWriter writer = new FileWriter(name);
+            writer.write(array.toJSONString());
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String findPath(String id, String pathIdFileName) {
         AtomicReference<String> path = new AtomicReference<>("");
         try {
             FileReader reader = new FileReader(pathIdFileName);
@@ -442,7 +485,8 @@ public class JSONReader {
 
     private ArrayList<Long> idsVsetkychObci(ArrayList<Long> regionIds) throws IOException {
         ArrayList<Long> ids;
-        JSONObject object = relatedQuery("13", "25", regionIds);
+        JSONObject object = relatedQuery("13", "24", regionIds);
+        System.out.println("calling parse ids obci");
         ids = parseRelatedResponseToIds(object);
         saveIdsToFile("ids-obce", ids);
         if (ids.size() > 0) {
@@ -522,15 +566,20 @@ public class JSONReader {
     private ArrayList<Long> parseRelatedResponseToIds(JSONObject object) {
         ArrayList<Long> ids = new ArrayList<>();
         JSONArray relatedGroups = (JSONArray) object.get("relatedRecordGroups");
-        relatedGroups.forEach(e -> {
-            JSONObject related = (JSONObject) e;
-            JSONArray record = (JSONArray) related.get("relatedRecords");
-            record.forEach(r -> {
-                JSONObject rec = (JSONObject) r;
-                long id = (long) ((JSONObject) rec.get("attributes")).get("objectid");
-                ids.add(id);
+        if (object.containsKey("relatedRecordGroups")) {
+            relatedGroups.forEach(e -> {
+                JSONObject related = (JSONObject) e;
+                JSONArray record = (JSONArray) related.get("relatedRecords");
+                record.forEach(r -> {
+                    JSONObject rec = (JSONObject) r;
+                    long id = (long) ((JSONObject) rec.get("attributes")).get("objectid");
+                    ids.add(id);
+                });
             });
-        });
+        } else {
+            System.out.println("doesn't contain related record groups");
+        }
+
         return ids;
     }
 
@@ -585,8 +634,8 @@ public class JSONReader {
     }
 
     public void createPathFiles() {
-//        krajPaths();
-//        orpPaths();
+        krajPaths();
+        orpPaths();
         obcePaths();
     }
 
@@ -659,8 +708,10 @@ public class JSONReader {
     private void obcePaths() {
         // skipping POU, but data scheme of RUIAN is ORP -> POU -> city
         ArrayList<Long> ids = idsFromIdFile("ids-orp");
+        //hasmap of krajId as key and pou Id as value in array
         HashMap<Long, ArrayList<Long>> orpPouHash = new HashMap<>();
         JSONArray pathsArray = new JSONArray(); //to add path/id objects for final file
+        HashMap<Long, Integer> obecPerOrp = new HashMap<>();
         try {
             JSONObject relatedPou = relatedQuery("14", "26", ids);
             ArrayList<Long> pouIds = parseRelatedResponseToIds(relatedPou);
@@ -677,7 +728,7 @@ public class JSONReader {
                 });
             });
 
-            JSONObject relatedObce = relatedQuery("13", "25", pouIds);
+            JSONObject relatedObce = relatedQuery("13", "24", pouIds);
             JSONArray relatedRecordGroupsObce = (JSONArray) relatedObce.get("relatedRecordGroups");
             relatedRecordGroupsObce.forEach(g -> {
                 JSONObject group = (JSONObject) g;
@@ -694,17 +745,26 @@ public class JSONReader {
                 //for each record create path/id object
                 JSONArray records = (JSONArray) group.get("relatedRecords");
                 AtomicInteger i = new AtomicInteger();
+                if (obecPerOrp.containsKey(orpParentId.longValue())) {
+                    i.set(obecPerOrp.get(orpParentId.longValue()));
+                } else {
+                    obecPerOrp.put(orpParentId.longValue(), 0);
+                }
                 records.forEach(r -> {
                     i.getAndIncrement();
+                    obecPerOrp.replace(orpParentId.longValue(), i.intValue());
                     JSONObject record = (JSONObject) r;
                     long id = (long)  ((JSONObject) record.get("attributes")).get("objectid");
                     String parentPath = getOrpPath(orpParentId.longValue());
                     String prefix = parentPath.substring(0, 4);
                     String postfix;
-                    if (i.intValue() > 9) {
-                        postfix = i.intValue() + "000";
+                    if (i.intValue() > 99) {
+                        System.out.println("I: " + i.intValue());
+                        postfix = i.intValue() + "00";
+                    } else if (i.intValue() > 9) {
+                        postfix = "0" + i.intValue() + "00";
                     } else {
-                        postfix = "0" + i.intValue() + "000";
+                        postfix = "00" + i.intValue() + "00";
                     }
                     JSONObject pathRecord = new JSONObject();
                     pathRecord.put("objectId", id);
@@ -716,6 +776,25 @@ public class JSONReader {
             writer.write(pathsArray.toString());
             writer.flush();
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void checkPathDuplicates() {
+        try {
+            FileReader reader = new FileReader("orp-paths.json");
+            JSONParser parser = new JSONParser();
+            JSONArray array = (JSONArray) parser.parse(reader);
+            Set<String> paths = new HashSet<>();
+            array.forEach(o -> {
+                JSONObject object = (JSONObject) o;
+                String path = (String) object.get("path");
+                if (paths.contains(path)) {
+                    System.out.println("OBSAHUJE! " + path + object.get("objectId"));
+                }
+                paths.add(path);
+            });
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
     }

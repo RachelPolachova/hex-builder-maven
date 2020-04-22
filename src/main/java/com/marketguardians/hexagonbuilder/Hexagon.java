@@ -15,7 +15,6 @@ public class Hexagon {
     private LocationCoordinate2D topLeftPoint;
     private String name;
     private long id;
-    private String objectId;
 
     public Hexagon(LocationCoordinate2D topRightPoint, LocationCoordinate2D rightPoint, LocationCoordinate2D bottomRightPoint, LocationCoordinate2D bottomLeftPoint, LocationCoordinate2D leftPoint, LocationCoordinate2D topLeftPoint, String name, long id) {
         this.topRightPoint = topRightPoint;
@@ -30,7 +29,7 @@ public class Hexagon {
 
 
     public void printPoints() {
-        System.out.println("Printing: " + name);
+//        System.out.println("Printing: " + name);
         System.out.println(topRightPoint.getLongitude() + ", " + topRightPoint.getLatitude());
         System.out.println(rightPoint.getLongitude() + ", " + rightPoint.getLatitude());
         System.out.println(bottomRightPoint.getLongitude() + ", " + bottomRightPoint.getLatitude());
@@ -90,13 +89,5 @@ public class Hexagon {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getObjectId() {
-        return objectId;
-    }
-
-    public void setObjectId(String objectId) {
-        this.objectId = objectId;
     }
 }
