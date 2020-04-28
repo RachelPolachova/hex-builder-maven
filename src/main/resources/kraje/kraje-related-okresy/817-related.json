@@ -1,0 +1,65 @@
+{
+ "fields": [
+  {
+   "name": "objectid",
+   "type": "esriFieldTypeOID",
+   "alias": "objectid"
+  },
+  {
+   "name": "nazev",
+   "type": "esriFieldTypeString",
+   "alias": "Název okresu",
+   "length": 48
+  },
+  {
+   "name": "vusc",
+   "type": "esriFieldTypeSmallInteger",
+   "alias": "Nadřazený VÚSC"
+  },
+  {
+   "name": "nutslau",
+   "type": "esriFieldTypeString",
+   "alias": "Kód územního celku v NUTS/LAU",
+   "length": 6
+  }
+ ],
+ "relatedRecordGroups": [
+  {
+   "objectId": 817,
+   "relatedRecords": [
+    {
+     "attributes": {
+      "objectid": 4080,
+      "nazev": "Chrudim",
+      "vusc": 94,
+      "nutslau": "CZ0531"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 4081,
+      "nazev": "Ústí nad Orlicí",
+      "vusc": 94,
+      "nutslau": "CZ0534"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 50,
+      "nazev": "Svitavy",
+      "vusc": 94,
+      "nutslau": "CZ0533"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 2081,
+      "nazev": "Pardubice",
+      "vusc": 94,
+      "nutslau": "CZ0532"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,73 @@
+{
+ "fields": [
+  {
+   "name": "objectid",
+   "type": "esriFieldTypeOID",
+   "alias": "objectid"
+  },
+  {
+   "name": "nazev",
+   "type": "esriFieldTypeString",
+   "alias": "Název okresu",
+   "length": 48
+  },
+  {
+   "name": "vusc",
+   "type": "esriFieldTypeSmallInteger",
+   "alias": "Nadřazený VÚSC"
+  },
+  {
+   "name": "nutslau",
+   "type": "esriFieldTypeString",
+   "alias": "Kód územního celku v NUTS/LAU",
+   "length": 6
+  }
+ ],
+ "relatedRecordGroups": [
+  {
+   "objectId": 3216,
+   "relatedRecords": [
+    {
+     "attributes": {
+      "objectid": 48,
+      "nazev": "Rychnov nad Kněžnou",
+      "vusc": 86,
+      "nutslau": "CZ0524"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 8879,
+      "nazev": "Jičín",
+      "vusc": 86,
+      "nutslau": "CZ0522"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 79,
+      "nazev": "Hradec Králové",
+      "vusc": 86,
+      "nutslau": "CZ0521"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 3680,
+      "nazev": "Náchod",
+      "vusc": 86,
+      "nutslau": "CZ0523"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 3681,
+      "nazev": "Trutnov",
+      "vusc": 86,
+      "nutslau": "CZ0525"
+     }
+    }
+   ]
+  }
+ ]
+}

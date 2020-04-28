@@ -1,0 +1,129 @@
+{
+ "fields": [
+  {
+   "name": "objectid",
+   "type": "esriFieldTypeOID",
+   "alias": "objectid"
+  },
+  {
+   "name": "nazev",
+   "type": "esriFieldTypeString",
+   "alias": "Název okresu",
+   "length": 48
+  },
+  {
+   "name": "vusc",
+   "type": "esriFieldTypeSmallInteger",
+   "alias": "Nadřazený VÚSC"
+  },
+  {
+   "name": "nutslau",
+   "type": "esriFieldTypeString",
+   "alias": "Kód územního celku v NUTS/LAU",
+   "length": 6
+  }
+ ],
+ "relatedRecordGroups": [
+  {
+   "objectId": 3215,
+   "relatedRecords": [
+    {
+     "attributes": {
+      "objectid": 4,
+      "nazev": "Kladno",
+      "vusc": 27,
+      "nutslau": "CZ0203"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 13,
+      "nazev": "Rakovník",
+      "vusc": 27,
+      "nutslau": "CZ020C"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 5679,
+      "nazev": "Praha-východ",
+      "vusc": 27,
+      "nutslau": "CZ0209"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 6079,
+      "nazev": "Příbram",
+      "vusc": 27,
+      "nutslau": "CZ020B"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 6879,
+      "nazev": "Praha-západ",
+      "vusc": 27,
+      "nutslau": "CZ020A"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 8878,
+      "nazev": "Mladá Boleslav",
+      "vusc": 27,
+      "nutslau": "CZ0207"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 78,
+      "nazev": "Nymburk",
+      "vusc": 27,
+      "nutslau": "CZ0208"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 86,
+      "nazev": "Kutná Hora",
+      "vusc": 27,
+      "nutslau": "CZ0205"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 1278,
+      "nazev": "Benešov",
+      "vusc": 27,
+      "nutslau": "CZ0201"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 2078,
+      "nazev": "Kolín",
+      "vusc": 27,
+      "nutslau": "CZ0204"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 2079,
+      "nazev": "Mělník",
+      "vusc": 27,
+      "nutslau": "CZ0206"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 2879,
+      "nazev": "Beroun",
+      "vusc": 27,
+      "nutslau": "CZ0202"
+     }
+    }
+   ]
+  }
+ ]
+}

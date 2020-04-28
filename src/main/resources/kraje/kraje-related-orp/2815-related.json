@@ -1,0 +1,28 @@
+{
+ "fields": [
+  {
+   "name": "objectid",
+   "type": "esriFieldTypeOID",
+   "alias": "objectid"
+  },
+  {
+   "name": "nazev",
+   "type": "esriFieldTypeString",
+   "alias": "Název ORP",
+   "length": 48
+  }
+ ],
+ "relatedRecordGroups": [
+  {
+   "objectId": 2815,
+   "relatedRecords": [
+    {
+     "attributes": {
+      "objectid": 7807,
+      "nazev": "Hlavní město Praha"
+     }
+    }
+   ]
+  }
+ ]
+}

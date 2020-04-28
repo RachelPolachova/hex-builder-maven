@@ -1,0 +1,41 @@
+{
+ "fields": [
+  {
+   "name": "objectid",
+   "type": "esriFieldTypeOID",
+   "alias": "objectid"
+  },
+  {
+   "name": "nazev",
+   "type": "esriFieldTypeString",
+   "alias": "Název okresu",
+   "length": 48
+  },
+  {
+   "name": "vusc",
+   "type": "esriFieldTypeSmallInteger",
+   "alias": "Nadřazený VÚSC"
+  },
+  {
+   "name": "nutslau",
+   "type": "esriFieldTypeString",
+   "alias": "Kód územního celku v NUTS/LAU",
+   "length": 6
+  }
+ ],
+ "relatedRecordGroups": [
+  {
+   "objectId": 2815,
+   "relatedRecords": [
+    {
+     "attributes": {
+      "objectid": 6878,
+      "nazev": "Hlavní město Praha",
+      "vusc": 19,
+      "nutslau": "CZ0100"
+     }
+    }
+   ]
+  }
+ ]
+}
